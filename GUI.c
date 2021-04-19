@@ -1,4 +1,14 @@
 #include <gtk/gtk.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/socket.h>
+#include <unistd.h>
+#include <arpa/inet.h>
+
+#define MAXCHAR 80
+#define PORT 6666
+#define SA struct sockaddr
 
 // Constants
 const int WINDOW_HEIGHT = 1000;
@@ -17,11 +27,79 @@ const struct DK_POSITION
     int y_pos;
 } DK_POSITION = {50,565};
 
+// Variables
+int socketFileDescriptor;
+
 
 GtkWidget* window, *layout, *deedee_kong;
 
+void *listenMessage(void *vargp){
+
+    char message[MAXCHAR];
+    int messageLength;
+    int messageLengthAux;
+
+    while (TRUE)
+    {
+        read(socketFileDescriptor, (char *)&messageLengthAux, sizeof(int));
+        messageLength = ntohl(messageLengthAux);
+        read(socketFileDescriptor, message, messageLength);
+        printf("Message from server: %s\n", message);
+        if (read(socketFileDescriptor, message, messageLength) < 0) {
+            printf("ERROR");
+        }
+    }
+}
+
+void *sendMessage(void *vargp)
+{
+    char message[MAXCHAR];
+    int messageLength;
+    int messageLengthAux;
+
+    while (TRUE)
+    {
+        bzero(message, sizeof(message));
+        messageLength = 0;
+        while ((message[messageLength++] = getchar()) != '\n');
+        messageLength++;
+        messageLengthAux = htonl(messageLength);
+        write(socketFileDescriptor, (char *)&messageLengthAux, sizeof(messageLength));
+        write(socketFileDescriptor, message, messageLength);
+    }
+    
+}
+
 int main(int argc, char* argv[])
 {
+    
+    struct sockaddr_in serverAddress;
+    // Creating and verification the socket.
+    socketFileDescriptor = socket(AF_INET, SOCK_STREAM, 0);
+
+    if (socketFileDescriptor == -1) {
+        printf("socket creation failed...\n");
+        exit(0);
+    }
+    else {
+        printf("Socket successfully created..\n");
+    }
+    bzero(&serverAddress, sizeof(serverAddress));
+    serverAddress.sin_family = AF_INET;
+    serverAddress.sin_addr.s_addr = inet_addr("127.0.0.1");
+    serverAddress.sin_port = htons(PORT);
+
+    if (connect(socketFileDescriptor, (SA*)&serverAddress, sizeof(serverAddress)) != 0) {
+        printf("connection with the server failed...\n");
+        exit(0);
+    } else {
+        printf("connected to the server..\n");
+    }
+    pthread_t sender_thread;
+    pthread_t listener_thread;
+    //pthread_create(&sender_thread, NULL, sendMessage, NULL);
+    pthread_create(&listener_thread, NULL, listenMessage, NULL);
+
     gtk_init(&argc, &argv);
 
     GtkWidget *rope_1, *rope_2, *rope_3, *rope_4;
