@@ -66,6 +66,12 @@ void *sendMessage(void *vargp)
         messageLengthAux = htonl(messageLength);
         write(socketFileDescriptor, (char *)&messageLengthAux, sizeof(messageLength));
         write(socketFileDescriptor, message, messageLength);
+
+        // codigo leer respuesta
+        read(socketFileDescriptor, (char *)&messageLengthAux, sizeof(int));
+        messageLength = ntohl(messageLengthAux);
+        read(socketFileDescriptor, message, messageLength);
+        printf("From Server: %s\n", message);
     }
     
 }
@@ -97,8 +103,8 @@ int main(int argc, char* argv[])
     }
     pthread_t sender_thread;
     pthread_t listener_thread;
-    //pthread_create(&sender_thread, NULL, sendMessage, NULL);
-    pthread_create(&listener_thread, NULL, listenMessage, NULL);
+    pthread_create(&sender_thread, NULL, sendMessage, NULL);
+    //pthread_create(&listener_thread, NULL, listenMessage, NULL);
 
     gtk_init(&argc, &argv);
 

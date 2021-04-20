@@ -16,11 +16,8 @@ public class Server {
             // Listening a connection to be made between the server and the client.
             Socket socket = serverSocket.accept();
 
-            Listen listen = new Listen(socket);
-            SendMessage sendMessage = new SendMessage(socket);
-
-            //listen.run();
-            sendMessage.run();
+            Messages messagesThread = new Messages(socket);
+            messagesThread.run();
 
         } catch (Exception exe) {
             exe.printStackTrace();
