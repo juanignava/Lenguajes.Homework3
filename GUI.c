@@ -116,3 +116,19 @@ int gameWindow(int option)
     gtk_main();
     return 0;
 }
+
+
+/*
+ac -> actualizar
+
+r1-> mover mono 1 a la derecha
+l1-> mover mono 1 a la izquierda
+u1-> mover mono 1 hacia arriba
+d1-> mover mono 1 hacia abajo
+
+r2-> mover mono 2 a la derecha
+l2-> mover mono 2 a la izquierda
+u2-> mover mono 2 hacia arriba
+d2-> mover mono 2 hacia abajo
+
+*/

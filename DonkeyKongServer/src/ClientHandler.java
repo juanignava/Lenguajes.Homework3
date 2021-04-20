@@ -76,7 +76,7 @@ public class ClientHandler implements Runnable {
      */
     private void writeObject(java.io.DataOutputStream output) throws IOException{
         
-        String message = "dk:100,400;f1:200,250;f2:300,214;f2:300,214;cr1:300,214;dk:100,400;f1:200,250;f2:300,214;f2:300,214;cr1:300,214";
+        String message = "dk,100,400;f1,200,250;f2,300,214;f3,_,_;c1,r,200,300;c2,a,200,400;....;/dk,_,_;f1,200,250;f2,300,214;f3,300,214;c1,r,200,300;c2,a,200,400;....;";
         Integer messageLength = message.length();
         output.writeInt(messageLength + 1);
         output.writeBytes(message);
@@ -90,7 +90,7 @@ public class ClientHandler implements Runnable {
      * @param instruction String with the indication given by the client
      */
     private void followInstruction(String instruction){
-        if (instruction.equals("Hello World\n")) {
+        if (instruction.equals("a")) {
             System.out.println("The beggining of programming");
         }
     }
