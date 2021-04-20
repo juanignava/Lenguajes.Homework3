@@ -33,24 +33,6 @@ int socketFileDescriptor;
 
 GtkWidget* window, *layout, *deedee_kong;
 
-void *listenMessage(void *vargp){
-
-    char message[MAXCHAR];
-    int messageLength;
-    int messageLengthAux;
-
-    while (TRUE)
-    {
-        read(socketFileDescriptor, (char *)&messageLengthAux, sizeof(int));
-        messageLength = ntohl(messageLengthAux);
-        read(socketFileDescriptor, message, messageLength);
-        printf("Message from server: %s\n", message);
-        if (read(socketFileDescriptor, message, messageLength) < 0) {
-            printf("ERROR");
-        }
-    }
-}
-
 void *sendMessage(void *vargp)
 {
     char message[MAXCHAR];
@@ -104,7 +86,6 @@ int main(int argc, char* argv[])
     pthread_t sender_thread;
     pthread_t listener_thread;
     pthread_create(&sender_thread, NULL, sendMessage, NULL);
-    //pthread_create(&listener_thread, NULL, listenMessage, NULL);
 
     gtk_init(&argc, &argv);
 
