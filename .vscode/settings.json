@@ -1,5 +1,8 @@
 {
     "java.project.sourcePaths": [
         "DonkeyKongServer/src"
-    ]
+    ],
+    "files.associations": {
+        "stdlib.h": "c"
+    }
 }

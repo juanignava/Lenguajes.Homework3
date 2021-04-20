@@ -33,7 +33,7 @@ public class ClientHandler implements Runnable {
         System.out.println("Listening thread active");
 
         // Receiving messages until getting the "stop"
-        while (!strFromClient.equals("stop")){
+        while (!strFromClient.equals("s")){
             try {
                 // Waits for the client to send something
                 input = new DataInputStream(this.client.getInputStream());

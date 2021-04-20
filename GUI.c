@@ -1,3 +1,5 @@
+#include "Constants.c"
+
 #include <gtk/gtk.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -5,104 +7,77 @@
 #include <sys/socket.h>
 #include <unistd.h>
 #include <arpa/inet.h>
+#include <stdbool.h>
 
-#define MAXCHAR 80
-#define PORT 6666
+// GUI variables
 #define SA struct sockaddr
-
-// Constants
-const int WINDOW_HEIGHT = 1000;
-const int WINDOW_WIDTH = 650;
-const int WIDTH_MARGIN = 50;
-const int HEIGHT_MARGIN = 25;
-const int BASE_HEIGHT_1 = 605;
-const int BASE_HEIGHT_2 = 335;
-const int BASE_HEIGHT_3 = 200;
-const int BASE_WIDTH = 164;
-const int ROPE_WIDTH = 20;
-const int ROPE_HEIGHT = 35;
-const struct DK_POSITION
+struct DK_POSITION
 {
     int x_pos;
     int y_pos;
-} DK_POSITION = {50,565};
+} 
+DK_POSITION = {DK_INITIALX, DK_INITIALY};
 
-// Variables
-int socketFileDescriptor;
-
+bool isPlayer1Active = false;
+bool *isPlayer1ActivePtr = &isPlayer1Active;
+bool isPlayer2Active = false;
+bool *isPlayer2ActivePtr = &isPlayer2Active;
+int player1ObserverCont = 0;
+int *player1ObserverContPtr = &player1ObserverCont;
+int player2ObserverCont = 0;
+int *player2ObserverContPtr = &player2ObserverCont;
 
 GtkWidget* window, *layout, *deedee_kong;
 
-void *sendMessage(void *vargp)
+void changeActiveVariables(int userID)
 {
-    char message[MAXCHAR]="helo";
-    int messageLength;
-    int messageLengthAux;
-
-    while (TRUE)
+    switch (userID)
     {
-        
-        bzero(message, sizeof(message));
-        messageLength = 0;
-        while ((message[messageLength++]) != '\0');
-        messageLength++;
-        messageLengthAux = htonl(messageLength);
-        write(socketFileDescriptor, (char *)&messageLengthAux, sizeof(messageLength));
-        write(socketFileDescriptor, "lessage", messageLength);
-
-        // codigo leer respuesta
-        read(socketFileDescriptor, (char *)&messageLengthAux, sizeof(int));
-        messageLength = ntohl(messageLengthAux);
-        read(socketFileDescriptor, message, messageLength);
-        printf("From Server: %s\n", message);
-        sleep(1);
+    case PLAYER1_ID:
+        isPlayer1Active = true;
+        break;
+    case PLAYER2_ID:
+        isPlayer2Active = true;
+        break;
+    case OBSERVER_PLAYER_1:
+        player1ObserverCont++;
+        break;
+    case OBSERVER_PLAYER_2:
+        player2ObserverCont++;
+        break;
+    default:
+        break;
     }
-    
 }
 
-int main(int argc, char* argv[])
+/*
+Name: game window.
+Description: creates a game window for a player or observer.
+Param: option -> determines which kind of window has to load
+1-> player 1
+2-> player 2
+3-> player 1 observer
+4-> player 2 observer
+*/
+int gameWindow(int option)
 {
-    
-    struct sockaddr_in serverAddress;
-    // Creating and verification the socket.
-    socketFileDescriptor = socket(AF_INET, SOCK_STREAM, 0);
-
-    if (socketFileDescriptor == -1) {
-        printf("socket creation failed...\n");
-        exit(0);
-    }
-    else {
-        printf("Socket successfully created..\n");
-    }
-    bzero(&serverAddress, sizeof(serverAddress));
-    serverAddress.sin_family = AF_INET;
-    serverAddress.sin_addr.s_addr = inet_addr("127.0.0.1");
-    serverAddress.sin_port = htons(PORT);
-
-    if (connect(socketFileDescriptor, (SA*)&serverAddress, sizeof(serverAddress)) != 0) {
-        printf("connection with the server failed...\n");
-        exit(0);
-    } else {
-        printf("connected to the server..\n");
-    }
-    pthread_t sender_thread;
-    pthread_t listener_thread;
-    pthread_create(&sender_thread, NULL, sendMessage, NULL);
-
-    gtk_init(&argc, &argv);
-
+    changeActiveVariables(option);
+    // Define the GUI variables
     GtkWidget *rope_1, *rope_2, *rope_3, *rope_4;
     GtkWidget *base_1, *base_2, *base_3, *base_4, *base_5, *base_6, *long_base;
     GtkWidget *donkey_kong;
     
+    // window definition
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_resizable(GTK_WINDOW(window), FALSE);
     gtk_widget_add_events(window, GDK_KEY_PRESS_MASK);
     g_signal_connect(window, "delete-event", G_CALLBACK(gtk_main_quit), NULL);
     gtk_widget_set_size_request(window, WINDOW_HEIGHT, WINDOW_WIDTH);
 
+    // layout definition
     layout = gtk_fixed_new();
 
+    // bases definitions
     base_1 = gtk_image_new_from_file("images/base.png");
     gtk_fixed_put(GTK_FIXED(layout), base_1, WIDTH_MARGIN, BASE_HEIGHT_1);
     base_2 = gtk_image_new_from_file("images/base.png");
@@ -115,7 +90,10 @@ int main(int argc, char* argv[])
     gtk_fixed_put(GTK_FIXED(layout), base_5, WIDTH_MARGIN + 4*BASE_WIDTH + 4*ROPE_WIDTH, BASE_HEIGHT_1);
     base_6 = gtk_image_new_from_file("images/base.png");
     gtk_fixed_put(GTK_FIXED(layout), base_6, WIDTH_MARGIN + 4*BASE_WIDTH + 4*ROPE_WIDTH, BASE_HEIGHT_3);
+    long_base = gtk_image_new_from_file("images/long_base.png");
+    gtk_fixed_put(GTK_FIXED(layout), long_base, WIDTH_MARGIN, HEIGHT_MARGIN);
 
+    // ropes definitions
     rope_1 = gtk_image_new_from_file("images/rope.png");
     gtk_fixed_put(GTK_FIXED(layout), rope_1, WIDTH_MARGIN + BASE_WIDTH, ROPE_HEIGHT);
     rope_2 = gtk_image_new_from_file("images/rope.png");
@@ -125,16 +103,14 @@ int main(int argc, char* argv[])
     rope_4 = gtk_image_new_from_file("images/rope.png");
     gtk_fixed_put(GTK_FIXED(layout), rope_4, WIDTH_MARGIN + 4*BASE_WIDTH + 3*ROPE_WIDTH, ROPE_HEIGHT);
 
+    // dondekey kong and deedee kong image definition
     donkey_kong = gtk_image_new_from_file("images/donkey_kong.png");
     gtk_fixed_put(GTK_FIXED(layout), donkey_kong, 850, 120);
     deedee_kong = gtk_image_new_from_file("images/deedee_kong.png");
     gtk_fixed_put(GTK_FIXED(layout), deedee_kong, DK_POSITION.x_pos, DK_POSITION.y_pos);
 
-    long_base = gtk_image_new_from_file("images/long_base.png");
-    gtk_fixed_put(GTK_FIXED(layout), long_base, WIDTH_MARGIN, HEIGHT_MARGIN);
-
+    // show images in the window
     gtk_container_add(GTK_CONTAINER(window), layout);
-    
     gtk_window_set_title(GTK_WINDOW(window), "Button Tutorial");
     gtk_widget_show_all(window);
     gtk_main();
