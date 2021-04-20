@@ -35,25 +35,27 @@ GtkWidget* window, *layout, *deedee_kong;
 
 void *sendMessage(void *vargp)
 {
-    char message[MAXCHAR];
+    char message[MAXCHAR]="helo";
     int messageLength;
     int messageLengthAux;
 
     while (TRUE)
     {
+        
         bzero(message, sizeof(message));
         messageLength = 0;
-        while ((message[messageLength++] = getchar()) != '\n');
+        while ((message[messageLength++]) != '\0');
         messageLength++;
         messageLengthAux = htonl(messageLength);
         write(socketFileDescriptor, (char *)&messageLengthAux, sizeof(messageLength));
-        write(socketFileDescriptor, message, messageLength);
+        write(socketFileDescriptor, "lessage", messageLength);
 
         // codigo leer respuesta
         read(socketFileDescriptor, (char *)&messageLengthAux, sizeof(int));
         messageLength = ntohl(messageLengthAux);
         read(socketFileDescriptor, message, messageLength);
         printf("From Server: %s\n", message);
+        sleep(1);
     }
     
 }
