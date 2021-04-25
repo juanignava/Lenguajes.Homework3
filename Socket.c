@@ -16,6 +16,10 @@ int socketFileDescriptor;
 char activeMessage[10] = "a"; // requests message
 char* activeMessagePtr = activeMessage;
 
+char message[MAXCHAR]="";
+char* messagePtr = message;
+
+
 /*
 name: send message to server
 description: function that sends requests to the server
@@ -23,7 +27,7 @@ and receives the answer
 */
 void *sendMessageToServer(void *vargp)
 {
-    char message[MAXCHAR]="";
+    //char message[MAXCHAR]="";
     int messageLength;
     int messageLengthAux;
 

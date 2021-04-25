@@ -1,5 +1,6 @@
 #include "Constants.c"
 #include "Socket.c"
+#include "MessageHandler.c"
 
 #include <gtk/gtk.h>
 #include <stdio.h>
@@ -103,6 +104,24 @@ void changeActiveVariables(int userID)
     }
 }
 
+void *updateComponents1(void *vargp)
+{
+    while (TRUE)
+    {
+        analizeServerMessage(1, messagePtr, window, layout, deedee_kong);
+        sleep(1);
+    }   
+}
+
+void *updateComponents2(void *vargp)
+{
+    while (TRUE)
+    {
+        analizeServerMessage(2 ,messagePtr, window, layout, deedee_kong);
+        sleep(1);
+    }   
+}
+
 /*
 Name: game window.
 Description: creates a game window for a player or observer.
@@ -114,7 +133,9 @@ Param: option -> determines which kind of window has to load
 */
 int gameWindow(int option)
 {
+    // Define the active players and observers
     changeActiveVariables(option);
+
     // Define the GUI variables
     GtkWidget *rope_1, *rope_2, *rope_3, *rope_4;
     GtkWidget *base_1, *base_2, *base_3, *base_4, *base_5, *base_6, *long_base;
@@ -127,6 +148,7 @@ int gameWindow(int option)
     
     g_signal_connect(window, "delete-event", G_CALLBACK(gtk_main_quit), NULL);
 
+    // Add the respective kay pressed event only if the user is a player
     if (option == 1)
     {
         g_signal_connect(window, "key_press_event", G_CALLBACK(key_pressed1), NULL);
@@ -178,7 +200,24 @@ int gameWindow(int option)
     gtk_container_add(GTK_CONTAINER(window), layout);
     gtk_window_set_title(GTK_WINDOW(window), "Button Tutorial");
     gtk_widget_show_all(window);
+
+    // Create the respective message request thread depending on the game
+    // the user wnats to see
+    if (option == 1 || option == 3)
+    {
+        pthread_t updateGUI_thread;
+        pthread_create(&updateGUI_thread, NULL, updateComponents1, NULL);
+
+    }
+    else if (option == 2 || option == 4)
+    {
+        pthread_t updateGUI_thread;
+        pthread_create(&updateGUI_thread, NULL, updateComponents2, NULL);
+    }
+    
     gtk_main();
+
+
     return 0;
 }
 
