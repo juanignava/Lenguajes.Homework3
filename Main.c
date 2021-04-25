@@ -1,6 +1,6 @@
 // Internal Files Imports
 #include "GUI.c"
-#include "Socket.c"
+//#include "Socket.c"
 
 // External Libraries Imports
 #include <gtk/gtk.h>

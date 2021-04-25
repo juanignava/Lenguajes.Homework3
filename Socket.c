@@ -34,6 +34,7 @@ void *sendMessageToServer(void *vargp)
         messageLength = 0;
         while ((message[messageLength++]) != '\0');
         messageLength++;
+        messageLength++;
         messageLengthAux = htonl(messageLength);
         write(socketFileDescriptor, (char *)&messageLengthAux, sizeof(messageLength));
         write(socketFileDescriptor, activeMessage, messageLength); // sends the activeMessage to the server
@@ -42,8 +43,9 @@ void *sendMessageToServer(void *vargp)
         read(socketFileDescriptor, (char *)&messageLengthAux, sizeof(int));
         messageLength = ntohl(messageLengthAux);
         read(socketFileDescriptor, message, messageLength);
-        printf("From Server: %s\n", message); //The client saves the server's answer in message
-        sleep(1);
+        //printf("From Server: %s\n", message); //The client saves the server's answer in message
+        
         strcpy(activeMessagePtr, "a"); // Restores the activeMessage variable into an "a" for updating
+        sleep(1);
     }
 }

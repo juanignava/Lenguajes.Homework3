@@ -1,4 +1,5 @@
 #include "Constants.c"
+#include "Socket.c"
 
 #include <gtk/gtk.h>
 #include <stdio.h>
@@ -27,7 +28,57 @@ int *player1ObserverContPtr = &player1ObserverCont;
 int player2ObserverCont = 0;
 int *player2ObserverContPtr = &player2ObserverCont;
 
+int playerType;
+
 GtkWidget* window, *layout, *deedee_kong;
+
+void key_pressed1(GtkWidget *widget, GdkEventKey *event, gpointer data)
+{
+    if (event->keyval == GDK_KEY_w)
+    {
+        printf("W Pressed\n");
+        strcpy(activeMessagePtr, "u1");
+    }
+    else if (event->keyval == GDK_KEY_a)
+    {
+        printf("A Pressed\n");
+        strcpy(activeMessagePtr, "l1");
+    }
+    else if (event->keyval == GDK_KEY_s)
+    {
+        printf("S Pressed\n");
+        strcpy(activeMessagePtr, "d1");
+    }
+    else if (event->keyval == GDK_KEY_d)
+    {
+        printf("D Pressed\n");
+        strcpy(activeMessagePtr, "r1");
+    }
+}
+
+void key_pressed2(GtkWidget *widget, GdkEventKey *event, gpointer data)
+{
+    if (event->keyval == GDK_KEY_w)
+    {
+        printf("W Pressed\n");
+        strcpy(activeMessagePtr, "u2");
+    }
+    else if (event->keyval == GDK_KEY_a)
+    {
+        printf("A Pressed\n");
+        strcpy(activeMessagePtr, "l2");
+    }
+    else if (event->keyval == GDK_KEY_s)
+    {
+        printf("S Pressed\n");
+        strcpy(activeMessagePtr, "d2");
+    }
+    else if (event->keyval == GDK_KEY_d)
+    {
+        printf("D Pressed\n");
+        strcpy(activeMessagePtr, "r2");
+    }
+}
 
 void changeActiveVariables(int userID)
 {
@@ -35,9 +86,11 @@ void changeActiveVariables(int userID)
     {
     case PLAYER1_ID:
         isPlayer1Active = true;
+
         break;
     case PLAYER2_ID:
         isPlayer2Active = true;
+
         break;
     case OBSERVER_PLAYER_1:
         player1ObserverCont++;
@@ -71,7 +124,19 @@ int gameWindow(int option)
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_resizable(GTK_WINDOW(window), FALSE);
     gtk_widget_add_events(window, GDK_KEY_PRESS_MASK);
+    
     g_signal_connect(window, "delete-event", G_CALLBACK(gtk_main_quit), NULL);
+
+    if (option == 1)
+    {
+        g_signal_connect(window, "key_press_event", G_CALLBACK(key_pressed1), NULL);
+
+    }
+    else if (option == 2)
+    {
+        g_signal_connect(window, "key_press_event", G_CALLBACK(key_pressed2), NULL);
+    }
+    
     gtk_widget_set_size_request(window, WINDOW_HEIGHT, WINDOW_WIDTH);
 
     // layout definition
