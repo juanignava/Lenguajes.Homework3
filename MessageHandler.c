@@ -37,12 +37,37 @@ void updateMonkey(char *monkeyInformation, GtkWidget* deedee_kong, GtkWidget* la
     char listInfo[10][14];
     getList(monkeyInformation, sepInfo, listInfo);
 
-    if (!(listInfo[1] == "_" || listInfo[2] == "_")){
-        int xPos = atoi(listInfo[1]);
-        int yPos = atoi(listInfo[2]);
+    int xPos = atoi(listInfo[1]);
+    int yPos = atoi(listInfo[2]);
+
+    if (xPos != 0 && yPos != 0){
+        
+        gtk_widget_show(deedee_kong);
 
         gtk_fixed_move(GTK_FIXED(layout), deedee_kong, xPos, yPos);
     }
+    else{
+        gtk_widget_hide(deedee_kong);
+    }
+}
+
+void updateFruit(char *fruit1Info, GtkWidget* fruit, GtkWidget* layout){
+    char sepInfo[2] = ",";
+    char listInfo[10][14];
+    getList(fruit1Info, sepInfo, listInfo);
+    int xPos = atoi(listInfo[1]);
+    int yPos = atoi(listInfo[2]);
+
+    if (xPos != 0 && yPos != 0){
+        
+        gtk_widget_show(fruit);
+
+        gtk_fixed_move(GTK_FIXED(layout), fruit, xPos, yPos);
+    }
+    else{
+        gtk_widget_hide(fruit);
+    }
+    
 }
 
 /*
@@ -54,7 +79,9 @@ inputs: player -> number of player the user needs to update.
         layout -> the layout of the respective window
         deedee_kong -> pointer to the definition of the game monkey
 */
-void analizeServerMessage(int player, char* message, GtkWidget* window, GtkWidget* layout, GtkWidget* deedee_kong){
+void analizeServerMessage(int player, char* message, GtkWidget* window, GtkWidget* layout, 
+GtkWidget* deedee_kong, GtkWidget *fruit1, GtkWidget *fruit2, GtkWidget *fruit3,
+GtkWidget *fruit4, GtkWidget *fruit5, GtkWidget *fruit6){
 
     // works only if the message sent has the minimum lenght
     if (strlen(message)> 103)
@@ -72,6 +99,12 @@ void analizeServerMessage(int player, char* message, GtkWidget* window, GtkWidge
             getList(listPlayers[0], sepComponent, listComponent);
             printf("Monkey information: %s\n", listComponent[0]);
             updateMonkey(listComponent[0], deedee_kong, layout);
+            updateFruit(listComponent[1], fruit1, layout);
+            updateFruit(listComponent[2], fruit2, layout);
+            updateFruit(listComponent[3], fruit3, layout);
+            updateFruit(listComponent[4], fruit4, layout);
+            updateFruit(listComponent[5], fruit5, layout);
+            updateFruit(listComponent[6], fruit6, layout);
         }
         if (player == 2)
         {

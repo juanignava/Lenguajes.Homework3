@@ -32,6 +32,10 @@ int *player2ObserverContPtr = &player2ObserverCont;
 int playerType;
 
 GtkWidget* window, *layout, *deedee_kong;
+GtkWidget *fruit1, *fruit2, *fruit3, *fruit4, *fruit5, *fruit6;
+GtkWidget *croc1, *croc2, *croc3, *croc4, *croc5, *croc6;
+GtkWidget *fruitList[6];
+
 
 void key_pressed1(GtkWidget *widget, GdkEventKey *event, gpointer data)
 {
@@ -108,7 +112,8 @@ void *updateComponents1(void *vargp)
 {
     while (TRUE)
     {
-        analizeServerMessage(1, messagePtr, window, layout, deedee_kong);
+        analizeServerMessage(1, messagePtr, window, layout, deedee_kong, fruit1,
+        fruit2, fruit3, fruit4, fruit5, fruit6);
         sleep(1);
     }   
 }
@@ -117,7 +122,8 @@ void *updateComponents2(void *vargp)
 {
     while (TRUE)
     {
-        analizeServerMessage(2 ,messagePtr, window, layout, deedee_kong);
+        analizeServerMessage(2 ,messagePtr, window, layout, deedee_kong, fruit1,
+        fruit2, fruit3, fruit4, fruit5, fruit6);
         sleep(1);
     }   
 }
@@ -192,6 +198,26 @@ int gameWindow(int option)
     rope_4 = gtk_image_new_from_file("images/rope.png");
     gtk_fixed_put(GTK_FIXED(layout), rope_4, WIDTH_MARGIN + 4*BASE_WIDTH + 3*ROPE_WIDTH, ROPE_HEIGHT);
 
+    // friuts definitions
+    fruit1 = gtk_image_new_from_file("images/apple.png");
+    gtk_fixed_put(GTK_FIXED(layout), fruit1, WIDTH_MARGIN + BASE_WIDTH, ROPE_HEIGHT);
+    fruit2 = gtk_image_new_from_file("images/pineapple.png");
+    gtk_fixed_put(GTK_FIXED(layout), fruit2, WIDTH_MARGIN + BASE_WIDTH, ROPE_HEIGHT);
+    fruit3 = gtk_image_new_from_file("images/banana.png");
+    gtk_fixed_put(GTK_FIXED(layout), fruit3, WIDTH_MARGIN + BASE_WIDTH, ROPE_HEIGHT);
+    fruit4 = gtk_image_new_from_file("images/apple.png");
+    gtk_fixed_put(GTK_FIXED(layout), fruit4, WIDTH_MARGIN + BASE_WIDTH, ROPE_HEIGHT);
+    fruit5 = gtk_image_new_from_file("images/banana.png");
+    gtk_fixed_put(GTK_FIXED(layout), fruit5, WIDTH_MARGIN + BASE_WIDTH, ROPE_HEIGHT);
+    fruit6 = gtk_image_new_from_file("images/pineapple.png");
+    gtk_fixed_put(GTK_FIXED(layout), fruit6, WIDTH_MARGIN + BASE_WIDTH, ROPE_HEIGHT);
+    fruitList[0] = fruit1;
+    fruitList[1] = fruit2;
+    fruitList[2] = fruit3;
+    fruitList[3] = fruit4;
+    fruitList[4] = fruit5;
+    fruitList[5] = fruit6;
+
     // dondekey kong and deedee kong image definition
     donkey_kong = gtk_image_new_from_file("images/donkey_kong.png");
     gtk_fixed_put(GTK_FIXED(layout), donkey_kong, 850, 120);
@@ -205,6 +231,15 @@ int gameWindow(int option)
     if (option == 3) gtk_window_set_title(GTK_WINDOW(window), "Player 2");
     if (option == 4) gtk_window_set_title(GTK_WINDOW(window), "Observer Player 2");
     gtk_widget_show_all(window);
+    gtk_widget_hide(deedee_kong);
+    gtk_widget_hide(fruit1);
+    gtk_widget_hide(fruit2);
+    gtk_widget_hide(fruit3);
+    gtk_widget_hide(fruit4);
+    gtk_widget_hide(fruit5);
+    gtk_widget_hide(fruit6);
+
+    
 
     // Create the respective message request thread depending on the game
     // the user wnats to see
