@@ -122,6 +122,8 @@ void *updateComponents2(void *vargp)
     }   
 }
 
+
+
 /*
 Name: game window.
 Description: creates a game window for a player or observer.
@@ -198,7 +200,10 @@ int gameWindow(int option)
 
     // show images in the window
     gtk_container_add(GTK_CONTAINER(window), layout);
-    gtk_window_set_title(GTK_WINDOW(window), "Button Tutorial");
+    if (option == 1) gtk_window_set_title(GTK_WINDOW(window), "Player 1");
+    if (option == 2) gtk_window_set_title(GTK_WINDOW(window), "Observer Player 1");
+    if (option == 3) gtk_window_set_title(GTK_WINDOW(window), "Player 2");
+    if (option == 4) gtk_window_set_title(GTK_WINDOW(window), "Observer Player 2");
     gtk_widget_show_all(window);
 
     // Create the respective message request thread depending on the game
