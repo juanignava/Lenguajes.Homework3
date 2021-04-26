@@ -31,7 +31,7 @@ int *player2ObserverContPtr = &player2ObserverCont;
 
 int playerType;
 
-GtkWidget* window, *layout, *deedee_kong;
+GtkWidget* window, *layout, *deedee_kong, *lifesLabel, *scoreLabel;
 GtkWidget *fruit1, *fruit2, *fruit3, *fruit4, *fruit5, *fruit6;
 GtkWidget *croc1, *croc2, *croc3, *croc4, *croc5, *croc6;
 GtkWidget *fruitList[6];
@@ -114,7 +114,7 @@ void *updateComponents1(void *vargp)
     {
         analizeServerMessage(1, messagePtr, window, layout, deedee_kong, fruit1,
         fruit2, fruit3, fruit4, fruit5, fruit6, croc1, croc2, croc3, croc4,
-        croc5, croc6);
+        croc5, croc6, lifesLabel, scoreLabel);
         usleep(300000);
     }   
 }
@@ -125,7 +125,7 @@ void *updateComponents2(void *vargp)
     {
         analizeServerMessage(2 ,messagePtr, window, layout, deedee_kong, fruit1,
         fruit2, fruit3, fruit4, fruit5, fruit6, croc1, croc2, croc3, croc4,
-        croc5, croc6);
+        croc5, croc6, lifesLabel, scoreLabel);
         usleep(300000);
     }   
 }
@@ -149,7 +149,7 @@ int gameWindow(int option)
     // Define the GUI variables
     GtkWidget *rope_1, *rope_2, *rope_3, *rope_4;
     GtkWidget *base_1, *base_2, *base_3, *base_4, *base_5, *base_6, *long_base;
-    GtkWidget *donkey_kong;
+    GtkWidget *donkey_kong, *livesLabelAux, *scoreLabelAux;
     
     // window definition
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
@@ -173,6 +173,17 @@ int gameWindow(int option)
 
     // layout definition
     layout = gtk_fixed_new();
+
+    // labels
+    livesLabelAux = gtk_label_new("Lifes left: ");
+    lifesLabel = gtk_label_new("");
+    gtk_fixed_put(GTK_FIXED(layout), livesLabelAux, 800, 50);
+    gtk_fixed_put(GTK_FIXED(layout), lifesLabel, 890, 50);
+
+    scoreLabelAux = gtk_label_new("Score: ");
+    scoreLabel = gtk_label_new("");
+    gtk_fixed_put(GTK_FIXED(layout), scoreLabelAux, 800, 100);
+    gtk_fixed_put(GTK_FIXED(layout), scoreLabel, 890, 100);
 
     // bases definitions
     base_1 = gtk_image_new_from_file("images/base.png");

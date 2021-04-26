@@ -32,10 +32,17 @@ inputs: monkeyInformation -> splitted part of the message that contains only the
         layout -> the layout of the respective window
         deedee_kong -> pointer to the definition of the game monkey
 */
-void updateMonkey(char *monkeyInformation, GtkWidget* deedee_kong, GtkWidget* layout){
+void updateMonkey(char *monkeyInformation, GtkWidget* deedee_kong, GtkWidget *lifesLabel, GtkWidget *scoreLabel,GtkWidget* layout){
     char sepInfo[2] = ",";
     char listInfo[10][14];
     getList(monkeyInformation, sepInfo, listInfo);
+
+    int lifesLeft =  atoi(listInfo[3]);
+    int score = atoi(listInfo[4]);
+
+
+    gtk_label_set_text(GTK_LABEL(lifesLabel), listInfo[3]);
+    gtk_label_set_text(GTK_LABEL(scoreLabel), listInfo[4]);
 
     int xPos = atoi(listInfo[1]);
     int yPos = atoi(listInfo[2]);
@@ -116,7 +123,8 @@ inputs: player -> number of player the user needs to update.
 void analizeServerMessage(int player, char* message, GtkWidget* window, GtkWidget* layout, 
 GtkWidget* deedee_kong, GtkWidget *fruit1, GtkWidget *fruit2, GtkWidget *fruit3,
 GtkWidget *fruit4, GtkWidget *fruit5, GtkWidget *fruit6, GtkWidget *croc1,
-GtkWidget *croc2, GtkWidget *croc3, GtkWidget *croc4, GtkWidget *croc5, GtkWidget *croc6){
+GtkWidget *croc2, GtkWidget *croc3, GtkWidget *croc4, GtkWidget *croc5, GtkWidget *croc6,
+GtkWidget *lifesLabel, GtkWidget *scoreLabel){
 
     // works only if the message sent has the minimum lenght
     if (strlen(message)> 103)
@@ -132,7 +140,7 @@ GtkWidget *croc2, GtkWidget *croc3, GtkWidget *croc4, GtkWidget *croc5, GtkWidge
         {
             // Separates the components, the message was contructed with a ';' within components.
             getList(listPlayers[0], sepComponent, listComponent);
-            updateMonkey(listComponent[0], deedee_kong, layout);
+            updateMonkey(listComponent[0], deedee_kong, lifesLabel, scoreLabel, layout);
             updateFruit(listComponent[1], fruit1, layout);
             updateFruit(listComponent[2], fruit2, layout);
             updateFruit(listComponent[3], fruit3, layout);

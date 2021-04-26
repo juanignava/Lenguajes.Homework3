@@ -220,14 +220,15 @@ public class ClientHandler implements Runnable {
             // Player does not exist
             if (players.get(i) == null) {
 
-                data += "dk,_,_;" +
+                data += "dk,_,_,_,_;" +
                         "f1,_,_;f2,_,_;f3,_,_;f4,_,_f5,_,_f6,_,_;" +
                         "c1,_,_,_;c2,_,_,_;c3,_,_,_;c4,_,_,_;c5,_,_,_;c6,_,_,_;" +
                         "/";
 
             } else {
 
-                data += "dk," + players.get(i).getPositionX() + "," + players.get(i).getPositionY() + ";";
+                data += "dk," + players.get(i).getPositionX() + "," + players.get(i).getPositionY() + ","
+                        + players.get(i).getLifes() + "," + players.get(i).getScore() + ";";
 
                 if (i == 0) {
 
