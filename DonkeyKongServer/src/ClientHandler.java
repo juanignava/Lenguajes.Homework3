@@ -227,6 +227,8 @@ public class ClientHandler implements Runnable {
 
             } else {
 
+                players.get(i).colisions(fruits1, alligators2);
+
                 data += "dk," + players.get(i).getPositionX() + "," + players.get(i).getPositionY() + ","
                         + players.get(i).getLifes() + "," + players.get(i).getScore() + ";";
 
@@ -277,6 +279,7 @@ public class ClientHandler implements Runnable {
                 }
 
                 data += "/";
+                players.get(i).colisions(fruits1, alligators2);;
 
             }
 
