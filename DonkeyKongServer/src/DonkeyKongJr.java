@@ -38,7 +38,23 @@ public class DonkeyKongJr {
      */
     public void setPositionX(Integer positionX) {
 
-        this.positionX += positionX;
+        Integer futureValue = this.positionX+positionX;
+        if ((futureValue > 50 && futureValue < 234 ||
+            futureValue > 388 && futureValue < 602 ||
+            futureValue > 756 && futureValue < 970) &&
+            (this.positionY > 560 && this.positionY < 600)){
+            this.positionX += positionX;
+        }
+        else if ((futureValue > 204 && futureValue < 408 ||
+                futureValue > 572 && futureValue < 786) &&
+                (this.positionY < 315 && this.positionY > 285)){
+            this.positionX += positionX;
+        }
+        else if (futureValue > 756 && futureValue < 950  &&
+                (this.positionY < 170 && this.positionY > 150)){
+            this.positionX += positionX;
+        }
+        
 
     }
 
@@ -57,7 +73,18 @@ public class DonkeyKongJr {
      */
     public void setPositionY(Integer positionY) {
 
-        this.positionY += positionY;
+        Integer futureValue = this.positionY + positionY;
+
+        if((futureValue > 50 && futureValue < 600) &&
+            ((this.positionX > 194 && this.positionX < 224) ||
+              (this.positionX > 378 && this.positionX < 408) ||
+              (this.positionX > 562 && this.positionX < 592) ||
+              (this.positionX > 746 && this.positionX < 776)) ){
+                  
+            this.positionY += positionY;
+        }
+
+
 
     }
 
