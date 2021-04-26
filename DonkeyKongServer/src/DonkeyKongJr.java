@@ -129,23 +129,25 @@ public class DonkeyKongJr {
     }
 
     void colisions(ArrayList<Fruit> fruits1, ArrayList<Alligator> alligators1){
+        
         for (int j = 0; j < fruits1.size(); j++) {
             if(fruits1.get(j) != null){
                 if (Math.abs(fruits1.get(j).getPositionX()-this.positionX) < 20 &&
                     Math.abs(fruits1.get(j).getPositionY() -this.positionY) < 20){
                         fruits1.get(j).setPositionX(-1*fruits1.get(j).getPositionX());
-                        fruits1.get(j).setPositionY(-1*-1*fruits1.get(j).getPositionY());
+                        fruits1.get(j).setPositionY(-1*fruits1.get(j).getPositionY());
                         this.lifes+=1;
                     }
             }
         }
+        
 
         for (int k = 0; k < alligators1.size(); k++) {
             if(alligators1.get(k) != null){
                 if (Math.abs(alligators1.get(k).getPositionX()-this.positionX) < 30 &&
                     Math.abs(alligators1.get(k).getPositionY() -this.positionY) < 30){
                         alligators1.get(k).setPositionX(-1*alligators1.get(k).getPositionX());
-                        alligators1.get(k).setPositionY(-1*-1*alligators1.get(k).getPositionY());
+                        alligators1.get(k).setPositionY(-1*alligators1.get(k).getPositionY());
                         this.lifes-=1;
                     }
             }

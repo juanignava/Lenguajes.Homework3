@@ -67,6 +67,10 @@ public class Alligator {
      */
     public void setPositionY(Integer positionY) {
 
+        if(this.positionX!=0){
+
+        
+
         Integer futurePosition = this.positionY + positionY*this.direction;
 
         if( futurePosition < 600 && futurePosition > 35 ){
@@ -84,7 +88,7 @@ public class Alligator {
             this.positionX = 0;
             this.positionY = 0;
         }
-
+    }
         
 
     }

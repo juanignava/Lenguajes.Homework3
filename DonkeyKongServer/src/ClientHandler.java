@@ -75,7 +75,7 @@ public class ClientHandler implements Runnable {
                 // Waits for the client to send something
                 input = new DataInputStream(this.client.getInputStream());
                 incomingMessage = this.readObject(input);
-                System.out.println("Message from client: "+ incomingMessage);
+                //System.out.println("Message from client: "+ incomingMessage);
 
                 // Instruction that will be followed depending on what client message says
                 this.followInstruction(incomingMessage);
@@ -122,7 +122,7 @@ public class ClientHandler implements Runnable {
         output.writeBytes(message);
         output.writeByte('\0');
         output.flush();
-        System.out.println("Enviando: " + message);
+        //System.out.println("Enviando: " + message);
 
     }
 
@@ -220,7 +220,7 @@ public class ClientHandler implements Runnable {
             // Player does not exist
             if (players.get(i) == null) {
 
-                data += "dk,_,_,_,_;" +
+                data += "dk,_,_;" +
                         "f1,_,_;f2,_,_;f3,_,_;f4,_,_f5,_,_f6,_,_;" +
                         "c1,_,_,_;c2,_,_,_;c3,_,_,_;c4,_,_,_;c5,_,_,_;c6,_,_,_;" +
                         "/";
@@ -229,8 +229,8 @@ public class ClientHandler implements Runnable {
 
                 players.get(i).colisions(fruits1, alligators2);
 
-                data += "dk," + players.get(i).getPositionX() + "," + players.get(i).getPositionY() + ","
-                        + players.get(i).getLifes() + "," + players.get(i).getScore() + ";";
+                data += "dk," + players.get(i).getPositionX() + "," + players.get(i).getPositionY() + ";";
+                       // + players.get(i).getLifes() + "," + players.get(i).getScore() + ";";
 
                 if (i == 0) {
 
@@ -279,7 +279,8 @@ public class ClientHandler implements Runnable {
                 }
 
                 data += "/";
-                players.get(i).colisions(fruits1, alligators2);;
+                //data += "/" + players.get(i).getLifes() + "," + players.get(i).getScore();
+                players.get(i).colisions(fruits1, alligators1);;
 
             }
 

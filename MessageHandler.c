@@ -37,12 +37,12 @@ void updateMonkey(char *monkeyInformation, GtkWidget* deedee_kong, GtkWidget *li
     char listInfo[10][14];
     getList(monkeyInformation, sepInfo, listInfo);
 
-    int lifesLeft =  atoi(listInfo[3]);
-    int score = atoi(listInfo[4]);
+    //int lifesLeft =  atoi(listInfo[3]);
+    //int score = atoi(listInfo[4]);
 
 
-    gtk_label_set_text(GTK_LABEL(lifesLabel), listInfo[3]);
-    gtk_label_set_text(GTK_LABEL(scoreLabel), listInfo[4]);
+    //gtk_label_set_text(GTK_LABEL(lifesLabel), listInfo[3]);
+    //gtk_label_set_text(GTK_LABEL(scoreLabel), listInfo[4]);
 
     int xPos = atoi(listInfo[1]);
     int yPos = atoi(listInfo[2]);
@@ -127,7 +127,7 @@ GtkWidget *croc2, GtkWidget *croc3, GtkWidget *croc4, GtkWidget *croc5, GtkWidge
 GtkWidget *lifesLabel, GtkWidget *scoreLabel){
 
     // works only if the message sent has the minimum lenght
-    if (strlen(message)> 103)
+    if (*message == 'd')
     {
         // separates the players, the message was contructed with a '/' separator within players
         char sepPlayer[2] = "/";
@@ -140,6 +140,9 @@ GtkWidget *lifesLabel, GtkWidget *scoreLabel){
         {
             // Separates the components, the message was contructed with a ';' within components.
             getList(listPlayers[0], sepComponent, listComponent);
+            printf("Monkey information: %s\n", listComponent[0]);
+            printf("First fruit information: %s\n", listComponent[1]);
+            printf("First crocodile information: %s\n", listComponent[7]);
             updateMonkey(listComponent[0], deedee_kong, lifesLabel, scoreLabel, layout);
             updateFruit(listComponent[1], fruit1, layout);
             updateFruit(listComponent[2], fruit2, layout);
