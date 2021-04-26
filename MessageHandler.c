@@ -74,12 +74,27 @@ void updateCroc(char *crocInfo, GtkWidget* croc, GtkWidget* layout){
     char sepInfo[2] = ",";
     char listInfo[10][14];
     getList(crocInfo, sepInfo, listInfo);
+
+
     int xPos = atoi(listInfo[2]);
     int yPos = atoi(listInfo[3]);
 
     if (xPos != 0 && yPos != 0){
-        
-        gtk_widget_show(croc);
+
+        if (!gtk_widget_is_visible(croc)){
+            printf("updating image...");
+            if (*listInfo[1] == 'r')
+            {
+            gtk_image_set_from_file(GTK_IMAGE(croc), "images/green-croc.png");
+            }
+            else if (*listInfo[1] == 'b') {
+            gtk_image_set_from_file(GTK_IMAGE(croc), "images/blue-croc.png");
+            }
+            //gtk_image_set_from_file(GTK_IMAGE(croc), "images/blue-croc.png");
+
+            gtk_widget_show(croc);
+        }
+       
 
         gtk_fixed_move(GTK_FIXED(layout), croc, xPos, yPos);
     }
@@ -117,7 +132,6 @@ GtkWidget *croc2, GtkWidget *croc3, GtkWidget *croc4, GtkWidget *croc5, GtkWidge
         {
             // Separates the components, the message was contructed with a ';' within components.
             getList(listPlayers[0], sepComponent, listComponent);
-            printf("Monkey information: %s\n", listComponent[0]);
             updateMonkey(listComponent[0], deedee_kong, layout);
             updateFruit(listComponent[1], fruit1, layout);
             updateFruit(listComponent[2], fruit2, layout);

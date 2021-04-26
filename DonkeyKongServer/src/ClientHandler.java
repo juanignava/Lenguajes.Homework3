@@ -114,6 +114,7 @@ public class ClientHandler implements Runnable {
      */
     private void writeObject(java.io.DataOutputStream output) throws IOException{
         
+
         String message = getData();
         Integer messageLength = message.length();
 
@@ -264,6 +265,8 @@ public class ClientHandler implements Runnable {
                         data += "c" + (k + 1) + ",_,_,_;";
 
                     } else {
+
+                        alligatorsTemporal.get(k).setPositionY(PIXELS_UP_DOWN);
 
                         data += "c" + (k + 1) + "," + alligatorsTemporal.get(k).getColor() + "," +
                                 alligatorsTemporal.get(k).getPositionX() + "," + alligatorsTemporal.get(k).getPositionY() + ";";

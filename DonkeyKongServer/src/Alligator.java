@@ -7,6 +7,7 @@ public class Alligator {
     private Integer positionX;
     private Integer positionY;
     private Integer speed;
+    private Integer direction = 1;
 
     /**
      * Description: constructor method.
@@ -66,7 +67,25 @@ public class Alligator {
      */
     public void setPositionY(Integer positionY) {
 
-        this.positionY += positionY;
+        Integer futurePosition = this.positionY + positionY*this.direction;
+
+        if( futurePosition < 600 && futurePosition > 35 ){
+            this.positionY += positionY*direction;
+        }
+        else if( (futurePosition >= 600 && this.color == "r")){
+            this.direction = -1;
+            this.positionY += positionY*direction;
+        }
+        else if ((futurePosition <= 35 && this.color == "r")){
+            this.direction = 1;
+            this.positionY += positionY*direction;
+        }
+        else{
+            this.positionX = 0;
+            this.positionY = 0;
+        }
+
+        
 
     }
 
