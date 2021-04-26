@@ -9,6 +9,9 @@ public class DonkeyKongJr {
     private Integer lifes;
     private Integer score;
 
+    private static final int DK_INITIAL_X = 50;
+    private static final int DK_INITIAL_Y = 565;
+
     /**
      * Description: constructor method.
      * @param positionX
@@ -55,6 +58,11 @@ public class DonkeyKongJr {
         else if (futureValue > 756 && futureValue < 950  &&
                 (this.positionY < 170 && this.positionY > 150)){
             this.positionX += positionX;
+            if (this.positionX > 850){
+                this.lifes+=1;
+                this.positionX = DK_INITIAL_X;
+                this.positionY = DK_INITIAL_Y;
+            }
         }
         
 
@@ -136,7 +144,7 @@ public class DonkeyKongJr {
                     Math.abs(fruits1.get(j).getPositionY() -this.positionY) < 20){
                         fruits1.get(j).setPositionX(-1*fruits1.get(j).getPositionX());
                         fruits1.get(j).setPositionY(-1*fruits1.get(j).getPositionY());
-                        this.lifes+=1;
+                        this.score += 10;
                     }
             }
         }

@@ -111,12 +111,18 @@ void updateCroc(char *crocInfo, GtkWidget* croc, GtkWidget* layout){
     
 }
 
+int actualScore = 0;
+
 void updateData(char *data, GtkWidget* lifesLabel, GtkWidget* scoreLabel){
     char sepInfo[2] = ",";
     char listInfo[10][14];
     getList(data, sepInfo, listInfo);
     int livesNum = atoi(listInfo[1]);
     int scoreNum = atoi(listInfo[2]);
+
+    if(actualScore!= scoreNum){
+        actualScore = scoreNum;
+    }
 
     gtk_label_set_text(GTK_LABEL(lifesLabel), listInfo[1]);
     gtk_label_set_text(GTK_LABEL(scoreLabel), listInfo[2]);
