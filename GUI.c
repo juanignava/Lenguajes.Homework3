@@ -131,6 +131,16 @@ void *updateComponents2(void *vargp)
 }
 
 
+void *updateData1(void *vargp)
+{
+    while (TRUE)
+    {
+        strcpy(activeMessagePtr, "sc");
+        usleep(700000);
+    }   
+}
+
+
 
 /*
 Name: game window.
@@ -281,6 +291,8 @@ int gameWindow(int option)
     {
         pthread_t updateGUI_thread;
         pthread_create(&updateGUI_thread, NULL, updateComponents1, NULL);
+        pthread_t updateData_thread;
+        pthread_create(&updateData_thread, NULL, updateData1, NULL);
 
     }
     else if (option == 2 || option == 4)

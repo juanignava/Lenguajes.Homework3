@@ -75,7 +75,7 @@ public class ClientHandler implements Runnable {
                 // Waits for the client to send something
                 input = new DataInputStream(this.client.getInputStream());
                 incomingMessage = this.readObject(input);
-                //System.out.println("Message from client: "+ incomingMessage);
+                System.out.println("Message from client: "+ incomingMessage);
 
                 // Instruction that will be followed depending on what client message says
                 this.followInstruction(incomingMessage);
@@ -112,17 +112,23 @@ public class ClientHandler implements Runnable {
      * @param output 
      * @throws IOException
      */
-    private void writeObject(java.io.DataOutputStream output) throws IOException{
+    private void writeObject(java.io.DataOutputStream output, Integer option) throws IOException{
+    
+        String message = "";
         
-
-        String message = getData();
+        if(option == 1){
+            message = getData();
+        }
+        else{
+            message = "l," + players.get(0).getLifes() + "," + players.get(0).getScore();
+        }
         Integer messageLength = message.length();
 
         output.writeInt(messageLength + 1);
         output.writeBytes(message);
         output.writeByte('\0');
         output.flush();
-        //System.out.println("Enviando: " + message);
+        System.out.println("Enviando: " + message);
 
     }
 
@@ -200,9 +206,19 @@ public class ClientHandler implements Runnable {
 
         }
 
+        int option;
+        if(instruction.contains("s")){
+            System.out.println("CHANGING TO SC");
+            option = 2;
+        }
+        else{
+            System.out.println("CHANGING TO 1");
+            option = 1;
+        }
+
         // The server always has to notify clients no matter what string it receives
         output = new DataOutputStream(client.getOutputStream());
-        writeObject(output);
+        writeObject(output, option);
 
     }
 
@@ -279,7 +295,7 @@ public class ClientHandler implements Runnable {
                 }
 
                 data += "/";
-                //data += "/" + players.get(i).getLifes() + "," + players.get(i).getScore();
+                //data += "/" + players.get(i).getLifes() + "/" + players.get(i).getScore();
                 players.get(i).colisions(fruits1, alligators1);;
 
             }

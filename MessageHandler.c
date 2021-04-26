@@ -111,6 +111,18 @@ void updateCroc(char *crocInfo, GtkWidget* croc, GtkWidget* layout){
     
 }
 
+void updateData(char *data, GtkWidget* lifesLabel, GtkWidget* scoreLabel){
+    char sepInfo[2] = ",";
+    char listInfo[10][14];
+    getList(data, sepInfo, listInfo);
+    int livesNum = atoi(listInfo[1]);
+    int scoreNum = atoi(listInfo[2]);
+
+    gtk_label_set_text(GTK_LABEL(lifesLabel), listInfo[1]);
+    gtk_label_set_text(GTK_LABEL(scoreLabel), listInfo[2]);
+    
+}
+
 /*
 name: analize server message
 description: splits the gicen message into the respective variables of the game
@@ -140,9 +152,6 @@ GtkWidget *lifesLabel, GtkWidget *scoreLabel){
         {
             // Separates the components, the message was contructed with a ';' within components.
             getList(listPlayers[0], sepComponent, listComponent);
-            printf("Monkey information: %s\n", listComponent[0]);
-            printf("First fruit information: %s\n", listComponent[1]);
-            printf("First crocodile information: %s\n", listComponent[7]);
             updateMonkey(listComponent[0], deedee_kong, lifesLabel, scoreLabel, layout);
             updateFruit(listComponent[1], fruit1, layout);
             updateFruit(listComponent[2], fruit2, layout);
@@ -162,6 +171,11 @@ GtkWidget *lifesLabel, GtkWidget *scoreLabel){
             
         }
     
+    }
+    else if (*message == 'l')
+    {
+        printf("updating data... ");
+        updateData(message, lifesLabel, scoreLabel);
     }
     
 }
