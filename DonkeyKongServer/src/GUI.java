@@ -41,41 +41,41 @@ public class GUI {
     private ArrayList<Fruit> fruits2;
 
     // Constants
-    private static final int PLATFORM1_X = 100;
-    private static final int PLATFORM1_Y = 100;
+    private static final int PLATFORM1_X = 132;
+    private static final int PLATFORM1_Y = 575;
 
-    private static final int PLATFORM2_X = 100;
-    private static final int PLATFORM2_Y = 100;
+    private static final int PLATFORM2_X = 316;
+    private static final int PLATFORM2_Y = 305;
 
-    private static final int PLATFORM3_X = 100;
-    private static final int PLATFORM3_Y = 100;
+    private static final int PLATFORM3_X = 500;
+    private static final int PLATFORM3_Y = 575;
 
-    private static final int PLATFORM4_X = 100;
-    private static final int PLATFORM4_Y = 100;
+    private static final int PLATFORM4_X = 684;
+    private static final int PLATFORM4_Y = 305;
 
-    private static final int PLATFORM5_X = 100;
-    private static final int PLATFORM5_Y = 100;
+    private static final int PLATFORM5_X = 868;
+    private static final int PLATFORM5_Y = 575;
 
-    private static final int PLATFORM6_X = 100;
-    private static final int PLATFORM6_Y = 100;
+    private static final int PLATFORM6_X = 868;
+    private static final int PLATFORM6_Y = 170;
 
-    private static final int LIANA1_X = 100;
-    private static final int LIANA1_Y = 100;
+    private static final int LIANA1_X = 199;
+    private static final int LIANA1_Y = 35;
 
-    private static final int LIANA2_X = 100;
-    private static final int LIANA2_Y = 100;
+    private static final int LIANA2_X = 383;
+    private static final int LIANA2_Y = 35;
 
-    private static final int LIANA3_X = 100;
-    private static final int LIANA3_Y = 100;
+    private static final int LIANA3_X = 567;
+    private static final int LIANA3_Y = 35;
 
-    private static final int LIANA4_X = 100;
-    private static final int LIANA4_Y = 100;
+    private static final int LIANA4_X = 752;
+    private static final int LIANA4_Y = 35;
 
-    private static final int LIANA5_X = 100;
-    private static final int LIANA5_Y = 100;
+    private static final int LIANA5_X = 383;
+    private static final int LIANA5_Y = 35;
 
-    private static final int LIANA6_X = 100;
-    private static final int LIANA6_Y = 100;
+    private static final int LIANA6_X = 752;
+    private static final int LIANA6_Y = 35;
 
     private static final int SPEED = 1;
 
@@ -239,10 +239,10 @@ public class GUI {
                     }
 
                 // Red alligator selected
-                } else if (comboBoxObjectValue == 1) {
+                } else if (comboBoxObjectValue == 1 || comboBoxObjectValue == 2) {
 
                     // Depending on the comboBoxObjectValue, the respective constants will be assigned to the alligator
-                    switch (comboBoxPlatformValue) {
+                    switch (comboBoxLianaValue) {
 
                         case 0:
                             positionX = LIANA1_X;
@@ -276,24 +276,42 @@ public class GUI {
 
                     }
 
-                    Alligator temporalAlligator = new Alligator("r", positionX,positionY, SPEED);
+                    if(comboBoxObjectValue == 1){
+                        Alligator temporalAlligator = new Alligator("r", positionX, positionY, SPEED);
+                        if (comboBoxPlayerValue == 0) {
 
-                    // Add red alligator to player1
-                    if (comboBoxPlayerValue == 0) {
+                            alligators1.set(comboBoxLianaValue, temporalAlligator);
+    
+                        // Add red alligator to player2
+                        } else {
+    
+                            alligators2.set(comboBoxLianaValue, temporalAlligator);
+    
+                        }
+                    }
+                    else{
+                        Alligator temporalAlligator = new Alligator("b", positionX, positionY, SPEED);
+                        if (comboBoxPlayerValue == 0) {
 
-                        alligators1.set(comboBoxLianaValue, temporalAlligator);
-
-                    // Add red alligator to player2
-                    } else {
-
-                        alligators2.set(comboBoxLianaValue, temporalAlligator);
-
+                            alligators1.set(comboBoxLianaValue, temporalAlligator);
+    
+                        // Add red alligator to player2
+                        } else {
+    
+                            alligators2.set(comboBoxLianaValue, temporalAlligator);
+    
+                        }
                     }
 
-                // Blue alligator selected
-                } else if (comboBoxObjectValue == 2) {
+                    // Add red alligator to player1
+                    
 
-                    Alligator temporalAlligator = new Alligator("b", positionX,positionY, SPEED);
+                // Blue alligator selected
+                } 
+                /*
+                else if (comboBoxObjectValue == 2) {
+
+                    Alligator temporalAlligator = new Alligator("b", positionX, positionY, SPEED);
 
                     // Add blue alligator to player1
                     if (comboBoxPlayerValue == 0) {
@@ -308,6 +326,7 @@ public class GUI {
                     }
 
                 }
+                */
 
             }
         });
