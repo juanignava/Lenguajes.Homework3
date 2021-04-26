@@ -34,8 +34,10 @@ public class ClientHandler implements Runnable {
     private ArrayList<Fruit> fruits2;
 
     // Constants
-    private static final int PIXELS_UP_DOWN = 50;
-    private static final int PIXELS_RIGHT_LEFT = 50;
+    private static final int PIXELS_UP_DOWN = 20;
+    private static final int PIXELS_RIGHT_LEFT = 20;
+    private static final int DK_INITIAL_X = 50;
+    private static final int DK_INITIAL_Y = 565;
 
     /**
      * Description: constructor method.
@@ -135,7 +137,7 @@ public class ClientHandler implements Runnable {
             // Checks if the player1 is already instantiated or not
             if (players.size() == 0) {
 
-                player1 = new DonkeyKongJr(0,0, 1, 0);
+                player1 = new DonkeyKongJr(DK_INITIAL_X, DK_INITIAL_Y, 1, 0);
                 players.add(player1);
 
             }

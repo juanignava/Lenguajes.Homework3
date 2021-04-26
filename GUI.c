@@ -115,7 +115,7 @@ void *updateComponents1(void *vargp)
         analizeServerMessage(1, messagePtr, window, layout, deedee_kong, fruit1,
         fruit2, fruit3, fruit4, fruit5, fruit6, croc1, croc2, croc3, croc4,
         croc5, croc6);
-        sleep(1);
+        usleep(300000);
     }   
 }
 
@@ -126,7 +126,7 @@ void *updateComponents2(void *vargp)
         analizeServerMessage(2 ,messagePtr, window, layout, deedee_kong, fruit1,
         fruit2, fruit3, fruit4, fruit5, fruit6, croc1, croc2, croc3, croc4,
         croc5, croc6);
-        sleep(1);
+        usleep(300000);
     }   
 }
 

@@ -50,6 +50,10 @@ void *sendMessageToServer(void *vargp)
         //printf("From Server: %s\n", message); //The client saves the server's answer in message
         
         strcpy(activeMessagePtr, "a"); // Restores the activeMessage variable into an "a" for updating
-        sleep(1);
+        //sleep(1);
+        usleep(300000);
+        
+        
+        
     }
 }
