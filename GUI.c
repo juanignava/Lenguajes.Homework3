@@ -113,7 +113,8 @@ void *updateComponents1(void *vargp)
     while (TRUE)
     {
         analizeServerMessage(1, messagePtr, window, layout, deedee_kong, fruit1,
-        fruit2, fruit3, fruit4, fruit5, fruit6);
+        fruit2, fruit3, fruit4, fruit5, fruit6, croc1, croc2, croc3, croc4,
+        croc5, croc6);
         sleep(1);
     }   
 }
@@ -123,7 +124,8 @@ void *updateComponents2(void *vargp)
     while (TRUE)
     {
         analizeServerMessage(2 ,messagePtr, window, layout, deedee_kong, fruit1,
-        fruit2, fruit3, fruit4, fruit5, fruit6);
+        fruit2, fruit3, fruit4, fruit5, fruit6, croc1, croc2, croc3, croc4,
+        croc5, croc6);
         sleep(1);
     }   
 }
@@ -218,6 +220,21 @@ int gameWindow(int option)
     fruitList[4] = fruit5;
     fruitList[5] = fruit6;
 
+    // Crocodile deifinitions
+    croc1 = gtk_image_new_from_file("images/green-croc.png");
+    gtk_fixed_put(GTK_FIXED(layout), croc1, WIDTH_MARGIN + BASE_WIDTH, ROPE_HEIGHT);
+    croc2 = gtk_image_new_from_file("images/green-croc.png");
+    gtk_fixed_put(GTK_FIXED(layout), croc2, WIDTH_MARGIN + BASE_WIDTH, ROPE_HEIGHT);
+    croc3 = gtk_image_new_from_file("images/green-croc.png");
+    gtk_fixed_put(GTK_FIXED(layout), croc3, WIDTH_MARGIN + BASE_WIDTH, ROPE_HEIGHT);
+    croc4 = gtk_image_new_from_file("images/green-croc.png");
+    gtk_fixed_put(GTK_FIXED(layout), croc4, WIDTH_MARGIN + BASE_WIDTH, ROPE_HEIGHT);
+    croc5 = gtk_image_new_from_file("images/green-croc.png");
+    gtk_fixed_put(GTK_FIXED(layout), croc5, WIDTH_MARGIN + BASE_WIDTH, ROPE_HEIGHT);
+    croc6 = gtk_image_new_from_file("images/green-croc.png");
+    gtk_fixed_put(GTK_FIXED(layout), croc6, WIDTH_MARGIN + BASE_WIDTH, ROPE_HEIGHT);
+
+
     // dondekey kong and deedee kong image definition
     donkey_kong = gtk_image_new_from_file("images/donkey_kong.png");
     gtk_fixed_put(GTK_FIXED(layout), donkey_kong, 850, 120);
@@ -227,8 +244,8 @@ int gameWindow(int option)
     // show images in the window
     gtk_container_add(GTK_CONTAINER(window), layout);
     if (option == 1) gtk_window_set_title(GTK_WINDOW(window), "Player 1");
-    if (option == 2) gtk_window_set_title(GTK_WINDOW(window), "Observer Player 1");
-    if (option == 3) gtk_window_set_title(GTK_WINDOW(window), "Player 2");
+    if (option == 2) gtk_window_set_title(GTK_WINDOW(window), "Player 2");
+    if (option == 3) gtk_window_set_title(GTK_WINDOW(window), "Oobserver Player 1");
     if (option == 4) gtk_window_set_title(GTK_WINDOW(window), "Observer Player 2");
     gtk_widget_show_all(window);
     gtk_widget_hide(deedee_kong);
@@ -238,6 +255,12 @@ int gameWindow(int option)
     gtk_widget_hide(fruit4);
     gtk_widget_hide(fruit5);
     gtk_widget_hide(fruit6);
+    gtk_widget_hide(croc1);
+    gtk_widget_hide(croc2);
+    gtk_widget_hide(croc3);
+    gtk_widget_hide(croc4);
+    gtk_widget_hide(croc5);
+    gtk_widget_hide(croc6);
 
     
 
