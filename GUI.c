@@ -125,12 +125,12 @@ void changeActiveVariables(int userID)
         break;
     case OBSERVER_PLAYER_1:
         strcpy(updateMessagePtr, "a1");
-        strcpy(playerTypeStrPtr, "1");
+        strcpy(playerTypeStrPtr, "3");
         player1ObserverCont++;
         break;
     case OBSERVER_PLAYER_2:
         strcpy(updateMessagePtr, "a2");
-        strcpy(playerTypeStrPtr, "2");
+        strcpy(playerTypeStrPtr, "4");
         player2ObserverCont++;
         break;
     default:
@@ -150,6 +150,7 @@ void *updateComponents1(void *vargp)
         analizeServerMessage(1, messagePtr, window, layout, deedee_kong, fruit1,
         fruit2, fruit3, fruit4, fruit5, fruit6, croc1, croc2, croc3, croc4,
         croc5, croc6, lifesLabel, scoreLabel);
+        
         usleep(300000);
     }   
 }
@@ -331,13 +332,19 @@ int gameWindow(int option)
 
     // Create the respective message request thread depending on the game
     // the user wnats to see
-    if (option == 1 || option == 3)
+    if (option == 1)
     {
         pthread_t updateGUI_thread;
         pthread_create(&updateGUI_thread, NULL, updateComponents1, NULL);
         pthread_t updateData_thread;
         pthread_create(&updateData_thread, NULL, updateData1, NULL);
 
+    }
+    else if (option == 3){
+        pthread_t updateGUI_thread;
+        pthread_create(&updateGUI_thread, NULL, updateComponents1, NULL);
+        pthread_t updateData_thread;
+        pthread_create(&updateData_thread, NULL, updateData1, NULL);
     }
     else if (option == 2 || option == 4)
     {

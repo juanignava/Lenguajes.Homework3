@@ -33,6 +33,7 @@ static void player1Button_clicked(GtkWidget* widget, gpointer data)
     if (!*isPlayer1ActivePtr)
     {
         //gtk_window_close(GTK_WINDOW(mainWindow));
+        gtk_widget_hide(mainWindow);
         printf("In player 1\n");
         strcpy(activeMessagePtr, "1");
         pthread_t sender_thread;
@@ -55,6 +56,7 @@ static void player2Button_clicked(GtkWidget* widget, gpointer data)
 {
     if (!*isPlayer2ActivePtr)
     {
+        gtk_widget_hide(mainWindow);
         strcpy(activeMessagePtr, "2");
         pthread_t sender_thread;
         pthread_create(&sender_thread, NULL, sendMessageToServer, NULL);
@@ -73,15 +75,17 @@ first player option
 */
 static void Observer1Button_clicked(GtkWidget* widget, gpointer data)
 {
-    if (*player1ObserverContPtr<2)
+    if (true)
     {
         //gtk_window_close(GTK_WINDOW(mainWindow));
+        gtk_widget_hide(mainWindow);
         strcpy(activeMessagePtr, "3");
         pthread_t sender_thread;
         pthread_create(&sender_thread, NULL, sendMessageToServer, NULL);
         gameWindow(OBSERVER_PLAYER_1);
     }
     else{
+        gtk_widget_set_sensitive (widget, FALSE);
         printf("Reached maximum player 1 observers");
     }
     
@@ -94,8 +98,9 @@ second player option
 */
 static void Observer2Button_clicked(GtkWidget* widget, gpointer data)
 {
-    if (*player2ObserverContPtr<2)
+    if (true)
     {
+        gtk_widget_hide(mainWindow);
         strcpy(activeMessagePtr, "4");
         pthread_t sender_thread;
         pthread_create(&sender_thread, NULL, sendMessageToServer, NULL);

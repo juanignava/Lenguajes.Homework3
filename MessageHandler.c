@@ -158,11 +158,13 @@ GtkWidget *lifesLabel, GtkWidget *scoreLabel){
     //printf("The message before: %s\n", message);
     // works only if the message sent has the minimum lenght
     if (  (*message == 'd' && *playerTypeStr == '1') ||
-          (*message == '2' && *playerTypeStr == '2') )
+          (*message == '2' && *playerTypeStr == '2') ||
+          (*message == 'd' && *playerTypeStr == '3') ||
+          (*message == '2' && *playerTypeStr == '4') )
     {
         // separates the players, the message was contructed with a '/' separator within players
 
-        //printf("The message: %s\n", message);
+        printf("The message: %s\n", message);
         char sepPlayer[2] = "/";
         char listPlayers[100][14];
         getList(message, sepPlayer, listPlayers);
