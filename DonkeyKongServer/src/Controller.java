@@ -153,11 +153,19 @@ public class Controller {
 
             option = 3;
 
+        } else if (instruction.contains("o")){
+
+            option = 6;
+
+        } else if (instruction.contains("p")){
+
+            option = 5;
+
         } else if (instruction.contains("k")){
 
             option = 4;
 
-        }else if (instruction.contains("1")){
+        } else if (instruction.contains("1")){
 
             option = 1;
 
@@ -332,6 +340,37 @@ public class Controller {
         } else if(option == 2) {
 
             message = getData(1);
+
+        } else if(option == 5) {
+
+            Integer actualPosX = players.get(0).getPositionX();
+            Integer actualPosY = players.get(0).getPositionY();
+            players.get(0).positionX = Constants.DK_INITIAL_X;
+            players.get(0).positionY = Constants.DK_INITIAL_Y;
+
+            players.get(0).lifes = 1;
+            players.get(0).score = 10;
+
+            message = "dk,_,_;" +
+            "f1,_,_;f2,_,_;f3,_,_;f4,_,_f5,_,_f6,_,_;" +
+            "c1,_,_,_;c2,_,_,_;c3,_,_,_;c4,_,_,_;c5,_,_,_;c6,_,_,_" +
+            "/";
+
+        } else if(option == 6) {
+
+            Integer actualPosX = players.get(1).getPositionX();
+            Integer actualPosY = players.get(1).getPositionY();
+            players.get(1).positionX = Constants.DK_INITIAL_X;
+            players.get(1).positionY = Constants.DK_INITIAL_Y;
+
+            players.get(1).lifes = 1;
+            players.get(1).score = 10;
+
+            message = "2dk,_,_;" +
+            "f1,_,_;f2,_,_;f3,_,_;f4,_,_f5,_,_f6,_,_;" +
+            "c1,_,_,_;c2,_,_,_;c3,_,_,_;c4,_,_,_;c5,_,_,_;c6,_,_,_" +
+            "/";
+
 
         } else if (option == 3){
 

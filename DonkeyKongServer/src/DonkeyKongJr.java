@@ -6,8 +6,8 @@ import java.lang.Math;
 public class DonkeyKongJr extends ObjectFactory {
 
     // Attributes for DonkeyKongJr instance
-    private Integer lifes;
-    private Integer score;
+    public Integer lifes;
+    public Integer score;
 
     /**
      * Description: constructor method.

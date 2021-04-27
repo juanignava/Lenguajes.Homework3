@@ -116,7 +116,7 @@ void updateCroc(char *crocInfo, GtkWidget* croc, GtkWidget* layout){
     
 }
 
-int actualScore = 0;
+int actualLives = 1;
 
 void updateData(char *data, GtkWidget* lifesLabel, GtkWidget* scoreLabel, GtkWidget* window){
     char sepInfo[2] = ",";
@@ -125,15 +125,17 @@ void updateData(char *data, GtkWidget* lifesLabel, GtkWidget* scoreLabel, GtkWid
     int livesNum = atoi(listInfo[1]);
     int scoreNum = atoi(listInfo[2]);
 
-    if(actualScore!= scoreNum){
-        actualScore = scoreNum;
+    if(actualLives!= livesNum){
+        actualLives = livesNum;
     }
 
+    /*
     if(livesNum == 0){
         gtk_label_set_text(GTK_LABEL(lifesLabel), "GAME OVER");
         sleep(2);
         gtk_window_close(GTK_WINDOW(window));
     }
+    */
 
     gtk_label_set_text(GTK_LABEL(lifesLabel), listInfo[1]);
     gtk_label_set_text(GTK_LABEL(scoreLabel), listInfo[2]);

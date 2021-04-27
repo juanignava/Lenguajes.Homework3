@@ -2,8 +2,8 @@
 public abstract class ObjectFactory {
 
     // Attributes for ObjectFactory instance
-    protected Integer positionX;
-    protected Integer positionY;
+    public Integer positionX;
+    public Integer positionY;
 
     /**
      * Description: constructor method.

@@ -180,6 +180,12 @@ void *updateData1(void *vargp)
 {
     while (TRUE)
     {
+        if(actualLives == 0){
+            gtk_label_set_text(GTK_LABEL(lifesLabel), "GAME OVER");
+            strcpy(activeMessagePtr, "p");
+            sleep(2);
+            gtk_window_close(GTK_WINDOW(window));
+        }
         strcpy(activeMessagePtr, "sc");
         usleep(700000);
     }   
@@ -189,6 +195,12 @@ void *updateData2(void *vargp)
 {
     while (TRUE)
     {
+        if(actualLives == 0){
+            gtk_label_set_text(GTK_LABEL(lifesLabel), "GAME OVER");
+            strcpy(activeMessagePtr, "o");
+            sleep(2);
+            gtk_window_close(GTK_WINDOW(window));
+        }
         strcpy(activeMessagePtr, "kc");
         usleep(700000);
     }   
