@@ -112,17 +112,25 @@ void changeActiveVariables(int userID)
     switch (userID)
     {
     case PLAYER1_ID:
+        strcpy(updateMessagePtr, "a1");
+        strcpy(playerTypeStrPtr, "1");
         isPlayer1Active = true;
 
         break;
     case PLAYER2_ID:
+        strcpy(updateMessagePtr, "a2");
+        strcpy(playerTypeStrPtr, "2");
         isPlayer2Active = true;
 
         break;
     case OBSERVER_PLAYER_1:
+        strcpy(updateMessagePtr, "a1");
+        strcpy(playerTypeStrPtr, "1");
         player1ObserverCont++;
         break;
     case OBSERVER_PLAYER_2:
+        strcpy(updateMessagePtr, "a2");
+        strcpy(playerTypeStrPtr, "2");
         player2ObserverCont++;
         break;
     default:

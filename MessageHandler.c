@@ -7,6 +7,10 @@ inputs: message -> message to analize.
         sep -> separator character.
         list -> resultant list.
 */
+
+char playerTypeStr[10];
+char *playerTypeStrPtr = playerTypeStr;
+
 void getList(char message[200], char sep[2], char list[10][14]){
   char *token;
   token = strtok(message, sep);
@@ -59,7 +63,7 @@ fruitInfo-> infromation given by the server about the fruit position
 */
 void updateFruit(char *fruit1Info, GtkWidget* fruit, GtkWidget* layout){
 
-    printf("The fruit information: %s\n", fruit1Info);
+    //printf("The fruit information: %s\n", fruit1Info);
     char sepInfo[2] = ",";
     char listInfo[10][14];
     getList(fruit1Info, sepInfo, listInfo);
@@ -79,7 +83,7 @@ void updateFruit(char *fruit1Info, GtkWidget* fruit, GtkWidget* layout){
 }
 
 void updateCroc(char *crocInfo, GtkWidget* croc, GtkWidget* layout){
-    printf("The Croc information: %s\n", crocInfo);
+    //printf("The Croc information: %s\n", crocInfo);
     char sepInfo[2] = ",";
     char listInfo[10][14];
     getList(crocInfo, sepInfo, listInfo);
@@ -151,23 +155,25 @@ GtkWidget *fruit4, GtkWidget *fruit5, GtkWidget *fruit6, GtkWidget *croc1,
 GtkWidget *croc2, GtkWidget *croc3, GtkWidget *croc4, GtkWidget *croc5, GtkWidget *croc6,
 GtkWidget *lifesLabel, GtkWidget *scoreLabel){
 
+    //printf("The message before: %s\n", message);
     // works only if the message sent has the minimum lenght
-    if (*message == 'd')
+    if (  (*message == 'd' && *playerTypeStr == '1') ||
+          (*message == '2' && *playerTypeStr == '2') )
     {
         // separates the players, the message was contructed with a '/' separator within players
 
-        printf("The message: %s\n", message);
+        //printf("The message: %s\n", message);
         char sepPlayer[2] = "/";
         char listPlayers[100][14];
         getList(message, sepPlayer, listPlayers);
 
         char sepComponent[2]=";";
         char listComponent[10][14];
-        if (player == 1)
+        if (player == 1 || player ==2)
         {
             // Separates the components, the message was contructed with a ';' within components.
             getList(listPlayers[0], sepComponent, listComponent);
-            printf("The monkey information: %s\n", listComponent[0]);
+            //printf("The monkey information: %s\n", listComponent[0]);
             updateMonkey(listComponent[0], deedee_kong, lifesLabel, scoreLabel, layout);
             updateFruit(listComponent[1], fruit1, layout);
             updateFruit(listComponent[2], fruit2, layout);

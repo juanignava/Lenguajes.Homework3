@@ -13,7 +13,9 @@
 
 // Variables
 int socketFileDescriptor;
-char activeMessage[10] = "a"; // requests message
+char updateMessage[10];
+char *updateMessagePtr = updateMessage;
+char activeMessage[10] = "a1"; // requests message
 char* activeMessagePtr = activeMessage;
 
 char message[MAXCHAR]="";
@@ -49,7 +51,7 @@ void *sendMessageToServer(void *vargp)
         read(socketFileDescriptor, message, messageLength);
         //printf("From Server: %s\n", message); //The client saves the server's answer in message
         
-        strcpy(activeMessagePtr, "a"); // Restores the activeMessage variable into an "a" for updating
+        strcpy(activeMessagePtr, updateMessage); // Restores the activeMessage variable into an "a" for updating
         //sleep(1);
         usleep(300000);
         

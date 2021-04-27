@@ -32,7 +32,7 @@ static void player1Button_clicked(GtkWidget* widget, gpointer data)
 {
     if (!*isPlayer1ActivePtr)
     {
-        gtk_window_close(GTK_WINDOW(mainWindow));
+        //gtk_window_close(GTK_WINDOW(mainWindow));
         printf("In player 1\n");
         strcpy(activeMessagePtr, "1");
         pthread_t sender_thread;
@@ -75,7 +75,7 @@ static void Observer1Button_clicked(GtkWidget* widget, gpointer data)
 {
     if (*player1ObserverContPtr<2)
     {
-        gtk_window_close(GTK_WINDOW(mainWindow));
+        //gtk_window_close(GTK_WINDOW(mainWindow));
         strcpy(activeMessagePtr, "3");
         pthread_t sender_thread;
         pthread_create(&sender_thread, NULL, sendMessageToServer, NULL);
@@ -123,8 +123,8 @@ int beginMainWindow(){
     observerPl2 = gtk_button_new_with_label("Observe Player 2");
     mainLabel = gtk_label_new("Please Select a Player");
 
-    gtk_widget_set_sensitive (player2Button, FALSE);
-    gtk_widget_set_sensitive (observerPl2, FALSE);
+    //gtk_widget_set_sensitive (player2Button, FALSE);
+    //gtk_widget_set_sensitive (observerPl2, FALSE);
 
     mainLayout = gtk_box_new(TRUE, 0);
     

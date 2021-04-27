@@ -151,12 +151,14 @@ public class Controller {
 
         if (instruction.contains("s")) {
 
-            option = 2;
+            option = 3;
 
-        } else {
+        } else if (instruction.contains("1")){
 
             option = 1;
 
+        } else {
+            option = 2;
         }
 
         return option;
@@ -166,30 +168,96 @@ public class Controller {
     /**
      * Description: return the full data of players, fruits and alligators in one simple string.
      */
-    public String getData() {
+    public String getData(int player) {
 
         String data = "";
         ArrayList<Fruit> fruitsTemporal;
         ArrayList<Alligator> alligatorsTemporal;
 
-        for (int i = 0; i < players.size()-1; i++) {
+        //for (int i = 0; i < players.size()-1; i++) {
 
             // Player does not exist
-            if (players.get(i) == null) {
+        if (players.get(player) == null) {
 
+            if(player == 0){
                 data += "dk,_,_;" +
-                        "f1,_,_;f2,_,_;f3,_,_;f4,_,_f5,_,_f6,_,_;" +
-                        "c1,_,_,_;c2,_,_,_;c3,_,_,_;c4,_,_,_;c5,_,_,_;c6,_,_,_" +
-                        "/";
-
+                "f1,_,_;f2,_,_;f3,_,_;f4,_,_f5,_,_f6,_,_;" +
+                "c1,_,_,_;c2,_,_,_;c3,_,_,_;c4,_,_,_;c5,_,_,_;c6,_,_,_" +
+                "/";
             } else {
+                data += "2dk,_,_;" +
+                    "f1,_,_;f2,_,_;f3,_,_;f4,_,_f5,_,_f6,_,_;" +
+                    "c1,_,_,_;c2,_,_,_;c3,_,_,_;c4,_,_,_;c5,_,_,_;c6,_,_,_" +
+                    "/";
+            }
 
-                players.get(i).colisions(fruits1, alligators1);
+        } else {
 
-                data += "dk," + players.get(i).getPositionX() + "," + players.get(i).getPositionY() + ";";
+            if(player == 0){
+
+                players.get(player).colisions(fruits1, alligators1);
+
+                data += "dk," + players.get(player).getPositionX() + "," + players.get(player).getPositionY() + ";";
                 // + players.get(i).getLifes() + "," + players.get(i).getScore() + ";";
 
-                if (i == 0) {
+                if (player == 0) {
+
+                    fruitsTemporal = fruits1;
+                    alligatorsTemporal = alligators1;
+
+                } else {
+
+                    fruitsTemporal = fruits2;
+                    alligatorsTemporal = alligators2;
+
+                }
+
+                for (int j = 0; j < fruitsTemporal.size(); j++) {
+
+                    // Model.Fruit does not exist
+                    if (fruitsTemporal.get(j) == null) {
+
+                        data += "f" + (j + 1) + ",_,_;";
+
+                    } else {
+
+                        data += "f" + (j + 1) + "," + fruitsTemporal.get(j).getPositionX() + "," +
+                                fruitsTemporal.get(j).getPositionY()+ ";";
+
+                    }
+
+                }
+
+                for (int k = 0; k < alligatorsTemporal.size(); k++) {
+
+                    // Model.Alligator does not exist
+                    if (alligatorsTemporal.get(k) == null) {
+
+                        data += "c" + (k + 1) + ",_,_,_;";
+
+                    } else {
+
+                        alligatorsTemporal.get(k).setPositionY(Constants.PIXELS_UP_DOWN);
+
+                        data += "c" + (k + 1) + "," + alligatorsTemporal.get(k).getColor() + "," +
+                                alligatorsTemporal.get(k).getPositionX() + "," + alligatorsTemporal.get(k).getPositionY() + ";";
+
+                    }
+
+                }
+
+                data += "/";
+                //data += "/" + players.get(i).getLifes() + "/" + players.get(i).getScore();
+                //players.get(i).colisions(fruits1, alligators1);;
+            }
+            else{
+
+                players.get(player).colisions(fruits2, alligators2);
+
+                data += "2dk," + players.get(player).getPositionX() + "," + players.get(player).getPositionY() + ";";
+                // + players.get(i).getLifes() + "," + players.get(i).getScore() + ";";
+
+                if (player == 0) {
 
                     fruitsTemporal = fruits1;
                     alligatorsTemporal = alligators1;
@@ -243,6 +311,8 @@ public class Controller {
 
         }
 
+        //}
+
         return data;
 
     }
@@ -253,7 +323,11 @@ public class Controller {
 
         if(option == 1) {
 
-            message = getData();
+            message = getData(0);
+
+        } else if(option == 2) {
+
+            message = getData(1);
 
         } else {
 
