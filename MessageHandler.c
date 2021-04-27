@@ -117,6 +117,8 @@ void updateCroc(char *crocInfo, GtkWidget* croc, GtkWidget* layout){
 }
 
 int actualLives = 1;
+int socketTime = 300000;
+//int *isLiveIncreasedPtr = &isLiveIncreased;
 
 void updateData(char *data, GtkWidget* lifesLabel, GtkWidget* scoreLabel, GtkWidget* window){
     char sepInfo[2] = ",";
@@ -125,17 +127,20 @@ void updateData(char *data, GtkWidget* lifesLabel, GtkWidget* scoreLabel, GtkWid
     int livesNum = atoi(listInfo[1]);
     int scoreNum = atoi(listInfo[2]);
 
+    printf("Actual Lives: %d\n", actualLives);
+    printf("Lives Num: %d\n", livesNum);
+    //printf("Is live increased? : %d\n", isLiveIncreased);
+    if (actualLives < livesNum){
+        
+        socketTime -= 50000;
+    }
+
+
     if(actualLives!= livesNum){
         actualLives = livesNum;
     }
 
-    /*
-    if(livesNum == 0){
-        gtk_label_set_text(GTK_LABEL(lifesLabel), "GAME OVER");
-        sleep(2);
-        gtk_window_close(GTK_WINDOW(window));
-    }
-    */
+    
 
     gtk_label_set_text(GTK_LABEL(lifesLabel), listInfo[1]);
     gtk_label_set_text(GTK_LABEL(scoreLabel), listInfo[2]);
@@ -166,7 +171,7 @@ GtkWidget *lifesLabel, GtkWidget *scoreLabel){
     {
         // separates the players, the message was contructed with a '/' separator within players
 
-        printf("The message: %s\n", message);
+        //printf("The message: %s\n", message);
         char sepPlayer[2] = "/";
         char listPlayers[100][14];
         getList(message, sepPlayer, listPlayers);

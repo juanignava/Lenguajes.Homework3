@@ -180,6 +180,9 @@ void *updateData1(void *vargp)
 {
     while (TRUE)
     {
+        //printf("Socket sleep time: %d \n", socketSleepTime);
+        socketSleepTime = socketTime;
+
         if(actualLives == 0){
             gtk_label_set_text(GTK_LABEL(lifesLabel), "GAME OVER");
             strcpy(activeMessagePtr, "p");
@@ -195,6 +198,8 @@ void *updateData2(void *vargp)
 {
     while (TRUE)
     {
+        socketSleepTime = socketTime;
+        
         if(actualLives == 0){
             gtk_label_set_text(GTK_LABEL(lifesLabel), "GAME OVER");
             strcpy(activeMessagePtr, "o");

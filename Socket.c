@@ -21,6 +21,7 @@ char* activeMessagePtr = activeMessage;
 char message[MAXCHAR]="";
 char* messagePtr = message;
 
+int socketSleepTime = 300000;
 
 /*
 name: send message to server
@@ -53,7 +54,7 @@ void *sendMessageToServer(void *vargp)
         
         strcpy(activeMessagePtr, updateMessage); // Restores the activeMessage variable into an "a" for updating
         //sleep(1);
-        usleep(300000);
+        usleep(socketSleepTime);
         
         
         
