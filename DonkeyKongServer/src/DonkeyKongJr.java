@@ -1,16 +1,13 @@
+
+
 import java.util.ArrayList;
 import java.lang.Math;
 
-public class DonkeyKongJr {
+public class DonkeyKongJr extends ObjectFactory {
 
     // Attributes for DonkeyKongJr instance
-    private Integer positionX;
-    private Integer positionY;
     private Integer lifes;
     private Integer score;
-
-    private static final int DK_INITIAL_X = 50;
-    private static final int DK_INITIAL_Y = 565;
 
     /**
      * Description: constructor method.
@@ -21,64 +18,53 @@ public class DonkeyKongJr {
      */
     public DonkeyKongJr(Integer positionX, Integer positionY, Integer lifes, Integer score) {
 
-        this.positionX = positionX;
-        this.positionY = positionY;
+        super(positionX, positionY);
+
         this.lifes = lifes;
         this.score = score;
 
     }
 
     /**
-     * Description: returns X position of DonkeyKongJr.
-     */
-    public Integer getPositionX() {
-
-        return positionX;
-
-    }
-
-    /**
-     * Description: sets X position to DonkeyKongJr.
+     * Description: sets X position to Model.DonkeyKongJr.
      * @param positionX
      */
     public void setPositionX(Integer positionX) {
 
-        Integer futureValue = this.positionX+positionX;
+        Integer futureValue = this.positionX + positionX;
+
         if ((futureValue > 50 && futureValue < 234 ||
             futureValue > 388 && futureValue < 602 ||
             futureValue > 756 && futureValue < 970) &&
-            (this.positionY > 560 && this.positionY < 600)){
+            (this.positionY > 560 && this.positionY < 600)) {
+
             this.positionX += positionX;
-        }
-        else if ((futureValue > 204 && futureValue < 408 ||
+
+        } else if ((futureValue > 204 && futureValue < 408 ||
                 futureValue > 572 && futureValue < 786) &&
-                (this.positionY < 315 && this.positionY > 285)){
+                (this.positionY < 315 && this.positionY > 285)) {
+
             this.positionX += positionX;
-        }
-        else if (futureValue > 756 && futureValue < 950  &&
-                (this.positionY < 170 && this.positionY > 150)){
+
+        } else if (futureValue > 756 && futureValue < 950  &&
+                (this.positionY < 170 && this.positionY > 150)) {
+
             this.positionX += positionX;
-            if (this.positionX > 850){
-                this.lifes+=1;
-                this.positionX = DK_INITIAL_X;
-                this.positionY = DK_INITIAL_Y;
+
+            if (this.positionX > 850) {
+
+                this.lifes += 1;
+                this.positionX = Constants.DK_INITIAL_X;
+                this.positionY = Constants.DK_INITIAL_Y;
+
             }
+
         }
-        
 
     }
 
     /**
-     * Description: returns Y position of DonkeyKongJr.
-     */
-    public Integer getPositionY() {
-
-        return positionY;
-
-    }
-
-    /**
-     * Description: sets Y position to DonkeyKongJr.
+     * Description: sets Y position to Model.DonkeyKongJr.
      * @param positionY
      */
     public void setPositionY(Integer positionY) {
@@ -92,14 +78,13 @@ public class DonkeyKongJr {
               (this.positionX > 746 && this.positionX < 776)) ){
                   
             this.positionY += positionY;
+
         }
-
-
 
     }
 
     /**
-     * Description: returns lifes of DonkeyKongJr.
+     * Description: returns lifes of Model.DonkeyKongJr.
      */
     public Integer getLifes() {
 
@@ -108,17 +93,7 @@ public class DonkeyKongJr {
     }
 
     /**
-     * Description: sets lifes to DonkeyKongJr.
-     * @param lifes
-     */
-    public void setLifes(Integer lifes) {
-
-        this.lifes += lifes;
-
-    }
-
-    /**
-     * Description: returns score of the DonkeyKongJr.
+     * Description: returns score of the Model.DonkeyKongJr.
      */
     public Integer getScore() {
 
@@ -127,38 +102,46 @@ public class DonkeyKongJr {
     }
 
     /**
-     * Description: sets score to DonkeyKongJr.
-     * @param score
+     * Description: checks if tha player has reached an alligator or a fruit
+     * @param fruits1
+     * @param alligators1
      */
-    public void setScore(Integer score) {
-
-        this.score += score;
-
-    }
-
-    void colisions(ArrayList<Fruit> fruits1, ArrayList<Alligator> alligators1){
+    public void colisions(ArrayList<Fruit> fruits1, ArrayList<Alligator> alligators1) {
         
         for (int j = 0; j < fruits1.size(); j++) {
-            if(fruits1.get(j) != null){
+
+            if(fruits1.get(j) != null) {
+
                 if (Math.abs(fruits1.get(j).getPositionX()-this.positionX) < 20 &&
                     Math.abs(fruits1.get(j).getPositionY() -this.positionY) < 20){
-                        fruits1.get(j).setPositionX(-1*fruits1.get(j).getPositionX());
-                        fruits1.get(j).setPositionY(-1*fruits1.get(j).getPositionY());
+
+                        fruits1.get(j).setPositionX( -1 * fruits1.get(j).getPositionX());
+                        fruits1.get(j).setPositionY( -1 * fruits1.get(j).getPositionY());
+
                         this.score += 10;
+
                     }
+
             }
+
         }
-        
 
         for (int k = 0; k < alligators1.size(); k++) {
-            if(alligators1.get(k) != null){
+
+            if(alligators1.get(k) != null) {
+
                 if (Math.abs(alligators1.get(k).getPositionX()-this.positionX) < 30 &&
-                    Math.abs(alligators1.get(k).getPositionY() -this.positionY) < 30){
-                        alligators1.get(k).setPositionX(-1*alligators1.get(k).getPositionX());
-                        alligators1.get(k).setPositionY(-1*alligators1.get(k).getPositionY());
-                        this.lifes-=1;
+                    Math.abs(alligators1.get(k).getPositionY() -this.positionY) < 30) {
+
+                        alligators1.get(k).setPositionX( -1 * alligators1.get(k).getPositionX());
+                        alligators1.get(k).setPositionY( -1 * alligators1.get(k).getPositionY());
+
+                        this.lifes -= 1;
+
                     }
+
             }
+
         }
 
     }

@@ -1,25 +1,22 @@
 
+public abstract class ObjectFactory {
 
-public class Fruit extends ObjectFactory {
-
-    // Attributes for Fruit instance
-    private Integer value;
+    // Attributes for ObjectFactory instance
+    protected Integer positionX;
+    protected Integer positionY;
 
     /**
      * Description: constructor method.
-     * param positionX
-     * @param positionY
      */
-    public Fruit(Integer positionX, Integer positionY) {
+    public ObjectFactory(Integer positionX, Integer positionY) {
 
-        super(positionX, positionY);
-
-        this.value = Constants.POINTS;
+        this.positionX = positionX;
+        this.positionY = positionY;
 
     }
 
     /**
-     * Description: returns X position of fruit.
+     * Description: returns X position of ObjectFactory.
      */
     public Integer getPositionX() {
 
@@ -28,7 +25,7 @@ public class Fruit extends ObjectFactory {
     }
 
     /**
-     * Description: sets X position to fruit.
+     * Description: sets X position to DonkeyKongJr.
      * @param positionX
      */
     public void setPositionX(Integer positionX) {
@@ -38,7 +35,7 @@ public class Fruit extends ObjectFactory {
     }
 
     /**
-     * Description: returns Y position of fruit.
+     * Description: returns Y position of DonkeyKongJr.
      */
     public Integer getPositionY() {
 
@@ -47,7 +44,7 @@ public class Fruit extends ObjectFactory {
     }
 
     /**
-     * Description: sets Y position to fruit.
+     * Description: sets Y position to DonkeyKongJr.
      * @param positionY
      */
     public void setPositionY(Integer positionY) {

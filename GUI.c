@@ -13,6 +13,8 @@
 
 // GUI variables
 #define SA struct sockaddr
+
+// Deedee kong position structure
 struct DK_POSITION
 {
     int x_pos;
@@ -20,6 +22,8 @@ struct DK_POSITION
 } 
 DK_POSITION = {DK_INITIALX, DK_INITIALY};
 
+// Active player variables, the define the maximum of
+// players and observers
 bool isPlayer1Active = false;
 bool *isPlayer1ActivePtr = &isPlayer1Active;
 bool isPlayer2Active = false;
@@ -31,36 +35,49 @@ int *player2ObserverContPtr = &player2ObserverCont;
 
 int playerType;
 
+// Widgets Definitions for the GUI
 GtkWidget* window, *layout, *deedee_kong, *lifesLabel, *scoreLabel;
 GtkWidget *fruit1, *fruit2, *fruit3, *fruit4, *fruit5, *fruit6;
 GtkWidget *croc1, *croc2, *croc3, *croc4, *croc5, *croc6;
 GtkWidget *fruitList[6];
 
-
+/*
+name: key pressed
+description: event used to control the first player of the game
+inputs:
+*/
 void key_pressed1(GtkWidget *widget, GdkEventKey *event, gpointer data)
 {
-    if (event->keyval == GDK_KEY_w)
+    // up command
+    if (event->keyval == GDK_KEY_s)
     {
-        printf("W Pressed\n");
         strcpy(activeMessagePtr, "u1");
     }
+
+    // left command
     else if (event->keyval == GDK_KEY_a)
     {
-        printf("A Pressed\n");
         strcpy(activeMessagePtr, "l1");
     }
-    else if (event->keyval == GDK_KEY_s)
+
+    // down command
+    else if (event->keyval == GDK_KEY_w)
     {
-        printf("S Pressed\n");
         strcpy(activeMessagePtr, "d1");
     }
+
+    // right command
     else if (event->keyval == GDK_KEY_d)
     {
-        printf("D Pressed\n");
         strcpy(activeMessagePtr, "r1");
     }
 }
 
+/*
+name: key pressed
+description: event used to control the second player of the game
+inputs:
+*/
 void key_pressed2(GtkWidget *widget, GdkEventKey *event, gpointer data)
 {
     if (event->keyval == GDK_KEY_w)
@@ -85,6 +102,11 @@ void key_pressed2(GtkWidget *widget, GdkEventKey *event, gpointer data)
     }
 }
 
+/*
+name: change active variables
+description: changes the variables to know if one player is already active or not
+input: userID -> integer that charactarizes each role
+*/
 void changeActiveVariables(int userID)
 {
     switch (userID)
@@ -108,6 +130,11 @@ void changeActiveVariables(int userID)
     }
 }
 
+/*
+name: update components
+description: thread function that keeps updating the GUI
+components that move by instruction of the server
+*/
 void *updateComponents1(void *vargp)
 {
     while (TRUE)
@@ -119,6 +146,11 @@ void *updateComponents1(void *vargp)
     }   
 }
 
+/*
+name: update components
+description: thread function that keeps updating the GUI
+components that move by instruction of the server
+*/
 void *updateComponents2(void *vargp)
 {
     while (TRUE)
@@ -130,7 +162,11 @@ void *updateComponents2(void *vargp)
     }   
 }
 
-
+/*
+name: update data
+description: asks the server to update the GUI with the data given
+about the score and player lives
+*/
 void *updateData1(void *vargp)
 {
     while (TRUE)
@@ -306,19 +342,3 @@ int gameWindow(int option)
 
     return 0;
 }
-
-
-/*
-ac -> actualizar
-
-r1-> mover mono 1 a la derecha
-l1-> mover mono 1 a la izquierda
-u1-> mover mono 1 hacia arriba
-d1-> mover mono 1 hacia abajo
-
-r2-> mover mono 2 a la derecha
-l2-> mover mono 2 a la izquierda
-u2-> mover mono 2 hacia arriba
-d2-> mover mono 2 hacia abajo
-
-*/

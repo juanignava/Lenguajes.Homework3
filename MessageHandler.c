@@ -37,13 +37,6 @@ void updateMonkey(char *monkeyInformation, GtkWidget* deedee_kong, GtkWidget *li
     char listInfo[10][14];
     getList(monkeyInformation, sepInfo, listInfo);
 
-    //int lifesLeft =  atoi(listInfo[3]);
-    //int score = atoi(listInfo[4]);
-
-
-    //gtk_label_set_text(GTK_LABEL(lifesLabel), listInfo[3]);
-    //gtk_label_set_text(GTK_LABEL(scoreLabel), listInfo[4]);
-
     int xPos = atoi(listInfo[1]);
     int yPos = atoi(listInfo[2]);
 
@@ -58,7 +51,15 @@ void updateMonkey(char *monkeyInformation, GtkWidget* deedee_kong, GtkWidget *li
     }
 }
 
+/*
+name: update fruit
+description: function that describes moves the fruit positions.
+inputs:
+fruitInfo-> infromation given by the server about the fruit position
+*/
 void updateFruit(char *fruit1Info, GtkWidget* fruit, GtkWidget* layout){
+
+    printf("The fruit information: %s\n", fruit1Info);
     char sepInfo[2] = ",";
     char listInfo[10][14];
     getList(fruit1Info, sepInfo, listInfo);
@@ -78,6 +79,7 @@ void updateFruit(char *fruit1Info, GtkWidget* fruit, GtkWidget* layout){
 }
 
 void updateCroc(char *crocInfo, GtkWidget* croc, GtkWidget* layout){
+    printf("The Croc information: %s\n", crocInfo);
     char sepInfo[2] = ",";
     char listInfo[10][14];
     getList(crocInfo, sepInfo, listInfo);
@@ -89,7 +91,6 @@ void updateCroc(char *crocInfo, GtkWidget* croc, GtkWidget* layout){
     if (xPos != 0 && yPos != 0){
 
         if (!gtk_widget_is_visible(croc)){
-            printf("updating image...");
             if (*listInfo[1] == 'r')
             {
             gtk_image_set_from_file(GTK_IMAGE(croc), "images/green-croc.png");
@@ -113,7 +114,7 @@ void updateCroc(char *crocInfo, GtkWidget* croc, GtkWidget* layout){
 
 int actualScore = 0;
 
-void updateData(char *data, GtkWidget* lifesLabel, GtkWidget* scoreLabel){
+void updateData(char *data, GtkWidget* lifesLabel, GtkWidget* scoreLabel, GtkWidget* window){
     char sepInfo[2] = ",";
     char listInfo[10][14];
     getList(data, sepInfo, listInfo);
@@ -122,6 +123,12 @@ void updateData(char *data, GtkWidget* lifesLabel, GtkWidget* scoreLabel){
 
     if(actualScore!= scoreNum){
         actualScore = scoreNum;
+    }
+
+    if(livesNum == 0){
+        gtk_label_set_text(GTK_LABEL(lifesLabel), "GAME OVER");
+        sleep(2);
+        gtk_window_close(GTK_WINDOW(window));
     }
 
     gtk_label_set_text(GTK_LABEL(lifesLabel), listInfo[1]);
@@ -148,6 +155,8 @@ GtkWidget *lifesLabel, GtkWidget *scoreLabel){
     if (*message == 'd')
     {
         // separates the players, the message was contructed with a '/' separator within players
+
+        printf("The message: %s\n", message);
         char sepPlayer[2] = "/";
         char listPlayers[100][14];
         getList(message, sepPlayer, listPlayers);
@@ -158,6 +167,7 @@ GtkWidget *lifesLabel, GtkWidget *scoreLabel){
         {
             // Separates the components, the message was contructed with a ';' within components.
             getList(listPlayers[0], sepComponent, listComponent);
+            printf("The monkey information: %s\n", listComponent[0]);
             updateMonkey(listComponent[0], deedee_kong, lifesLabel, scoreLabel, layout);
             updateFruit(listComponent[1], fruit1, layout);
             updateFruit(listComponent[2], fruit2, layout);
@@ -180,8 +190,7 @@ GtkWidget *lifesLabel, GtkWidget *scoreLabel){
     }
     else if (*message == 'l')
     {
-        printf("updating data... ");
-        updateData(message, lifesLabel, scoreLabel);
+        updateData(message, lifesLabel, scoreLabel, window);
     }
     
 }

@@ -1,11 +1,8 @@
 
-
-public class Alligator {
+public class Alligator extends ObjectFactory {
 
     // Attributes for Alligator instance
     private String color;
-    private Integer positionX;
-    private Integer positionY;
     private Integer speed;
     private Integer direction = 1;
 
@@ -17,9 +14,9 @@ public class Alligator {
      */
     public Alligator(String color, int positionX, int positionY, int speed) {
 
+        super(positionX, positionY);
+
         this.color = color;
-        this.positionX = positionX;
-        this.positionY = positionY;
         this.speed = speed;
 
     }
@@ -67,29 +64,32 @@ public class Alligator {
      */
     public void setPositionY(Integer positionY) {
 
-        if(this.positionX!=0){
+        if(this.positionX!=0) {
 
-        
+            Integer futurePosition = this.positionY + positionY * this.direction;
 
-        Integer futurePosition = this.positionY + positionY*this.direction;
+            if (futurePosition < 600 && futurePosition > 35) {
 
-        if( futurePosition < 600 && futurePosition > 35 ){
-            this.positionY += positionY*direction;
+                this.positionY += positionY * direction;
+
+            } else if ((futurePosition >= 600 && this.color == "r")) {
+
+                this.direction = -1;
+                this.positionY += positionY * direction;
+
+            } else if ((futurePosition <= 35 && this.color == "r")) {
+
+                this.direction = 1;
+                this.positionY += positionY * direction;
+
+            } else {
+
+                this.positionX = 0;
+                this.positionY = 0;
+
+            }
+
         }
-        else if( (futurePosition >= 600 && this.color == "r")){
-            this.direction = -1;
-            this.positionY += positionY*direction;
-        }
-        else if ((futurePosition <= 35 && this.color == "r")){
-            this.direction = 1;
-            this.positionY += positionY*direction;
-        }
-        else{
-            this.positionX = 0;
-            this.positionY = 0;
-        }
-    }
-        
 
     }
 
