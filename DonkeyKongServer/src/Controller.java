@@ -153,7 +153,11 @@ public class Controller {
 
             option = 3;
 
-        } else if (instruction.contains("1")){
+        } else if (instruction.contains("k")){
+
+            option = 4;
+
+        }else if (instruction.contains("1")){
 
             option = 1;
 
@@ -329,9 +333,13 @@ public class Controller {
 
             message = getData(1);
 
-        } else {
+        } else if (option == 3){
 
             message = "l," + players.get(0).getLifes() + "," + players.get(0).getScore();
+
+        } else if (option == 4){
+
+            message = "s," + players.get(1).getLifes() + "," + players.get(1).getScore();
 
         }
 

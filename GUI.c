@@ -80,7 +80,7 @@ inputs:
 */
 void key_pressed2(GtkWidget *widget, GdkEventKey *event, gpointer data)
 {
-    if (event->keyval == GDK_KEY_w)
+    if (event->keyval == GDK_KEY_s)
     {
         printf("W Pressed\n");
         strcpy(activeMessagePtr, "u2");
@@ -90,7 +90,7 @@ void key_pressed2(GtkWidget *widget, GdkEventKey *event, gpointer data)
         printf("A Pressed\n");
         strcpy(activeMessagePtr, "l2");
     }
-    else if (event->keyval == GDK_KEY_s)
+    else if (event->keyval == GDK_KEY_w)
     {
         printf("S Pressed\n");
         strcpy(activeMessagePtr, "d2");
@@ -185,7 +185,19 @@ void *updateData1(void *vargp)
     }   
 }
 
+void *updateData2(void *vargp)
+{
+    while (TRUE)
+    {
+        strcpy(activeMessagePtr, "kc");
+        usleep(700000);
+    }   
+}
 
+static void exitButtonClicked(GtkWidget *widget, gpointer data)
+{
+    gtk_window_close(GTK_WINDOW(window));
+}
 
 /*
 Name: game window.
@@ -204,14 +216,14 @@ int gameWindow(int option)
     // Define the GUI variables
     GtkWidget *rope_1, *rope_2, *rope_3, *rope_4;
     GtkWidget *base_1, *base_2, *base_3, *base_4, *base_5, *base_6, *long_base;
-    GtkWidget *donkey_kong, *livesLabelAux, *scoreLabelAux;
+    GtkWidget *donkey_kong, *livesLabelAux, *scoreLabelAux, *exitButton;
     
     // window definition
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_resizable(GTK_WINDOW(window), FALSE);
     gtk_widget_add_events(window, GDK_KEY_PRESS_MASK);
     
-    g_signal_connect(window, "delete-event", G_CALLBACK(gtk_main_quit), NULL);
+    //g_signal_connect(window, "delete-event", G_CALLBACK(gtk_main_quit), NULL);
 
     // Add the respective kay pressed event only if the user is a player
     if (option == 1)
@@ -239,6 +251,12 @@ int gameWindow(int option)
     scoreLabel = gtk_label_new("");
     gtk_fixed_put(GTK_FIXED(layout), scoreLabelAux, 800, 100);
     gtk_fixed_put(GTK_FIXED(layout), scoreLabel, 890, 100);
+
+    // exit button
+    exitButton = gtk_button_new_with_label("Exit Game");
+    g_signal_connect(exitButton, "clicked", G_CALLBACK(exitButtonClicked), NULL);
+    gtk_fixed_put(GTK_FIXED(layout), exitButton, 850, 500);
+
 
     // bases definitions
     base_1 = gtk_image_new_from_file("images/base.png");
@@ -350,6 +368,8 @@ int gameWindow(int option)
     {
         pthread_t updateGUI_thread;
         pthread_create(&updateGUI_thread, NULL, updateComponents2, NULL);
+        pthread_t updateData_thread;
+        pthread_create(&updateData_thread, NULL, updateData2, NULL);
     }
     
     gtk_main();

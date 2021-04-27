@@ -200,5 +200,9 @@ GtkWidget *lifesLabel, GtkWidget *scoreLabel){
     {
         updateData(message, lifesLabel, scoreLabel, window);
     }
+    else if (*message == 's')
+    {
+        updateData(message, lifesLabel, scoreLabel, window);
+    }
     
 }
