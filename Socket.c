@@ -50,13 +50,10 @@ void *sendMessageToServer(void *vargp)
         read(socketFileDescriptor, (char *)&messageLengthAux, sizeof(int));
         messageLength = ntohl(messageLengthAux);
         read(socketFileDescriptor, message, messageLength);
-        //printf("From Server: %s\n", message); //The client saves the server's answer in message
         
-        strcpy(activeMessagePtr, updateMessage); // Restores the activeMessage variable into an "a" for updating
-        //sleep(1);
+        // Restores the activeMessage variable into an "a1" or "a2" for updating
+        strcpy(activeMessagePtr, updateMessage); 
         usleep(socketSleepTime);
-        
-        
         
     }
 }

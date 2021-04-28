@@ -1,5 +1,6 @@
 // Internal Files Imports
 #include "GUI.c"
+#include "Constants.c"
 //#include "Socket.c"
 
 // External Libraries Imports
@@ -34,7 +35,6 @@ static void player1Button_clicked(GtkWidget* widget, gpointer data)
     {
         //gtk_window_close(GTK_WINDOW(mainWindow));
         gtk_widget_hide(mainWindow);
-        printf("In player 1\n");
         strcpy(activeMessagePtr, "1");
         pthread_t sender_thread;
         pthread_create(&sender_thread, NULL, sendMessageToServer, NULL);

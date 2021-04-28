@@ -33,6 +33,7 @@ int *player1ObserverContPtr = &player1ObserverCont;
 int player2ObserverCont = 0;
 int *player2ObserverContPtr = &player2ObserverCont;
 
+// integer with the type of player
 int playerType;
 
 // Widgets Definitions for the GUI
@@ -80,24 +81,24 @@ inputs:
 */
 void key_pressed2(GtkWidget *widget, GdkEventKey *event, gpointer data)
 {
+    // going up
     if (event->keyval == GDK_KEY_s)
     {
-        printf("W Pressed\n");
         strcpy(activeMessagePtr, "u2");
     }
+    // going left
     else if (event->keyval == GDK_KEY_a)
     {
-        printf("A Pressed\n");
         strcpy(activeMessagePtr, "l2");
     }
+    // going down
     else if (event->keyval == GDK_KEY_w)
     {
-        printf("S Pressed\n");
         strcpy(activeMessagePtr, "d2");
     }
+    // going right
     else if (event->keyval == GDK_KEY_d)
     {
-        printf("D Pressed\n");
         strcpy(activeMessagePtr, "r2");
     }
 }
@@ -112,23 +113,27 @@ void changeActiveVariables(int userID)
     switch (userID)
     {
     case PLAYER1_ID:
+        // update player 1 command
         strcpy(updateMessagePtr, "a1");
         strcpy(playerTypeStrPtr, "1");
         isPlayer1Active = true;
 
         break;
     case PLAYER2_ID:
+        // update player 2 command
         strcpy(updateMessagePtr, "a2");
         strcpy(playerTypeStrPtr, "2");
         isPlayer2Active = true;
 
         break;
     case OBSERVER_PLAYER_1:
+        // update player 1 command
         strcpy(updateMessagePtr, "a1");
         strcpy(playerTypeStrPtr, "3");
         player1ObserverCont++;
         break;
     case OBSERVER_PLAYER_2:
+        // update player 2 command
         strcpy(updateMessagePtr, "a2");
         strcpy(playerTypeStrPtr, "4");
         player2ObserverCont++;
@@ -180,7 +185,6 @@ void *updateData1(void *vargp)
 {
     while (TRUE)
     {
-        //printf("Socket sleep time: %d \n", socketSleepTime);
         socketSleepTime = socketTime;
 
         if(actualLives == 0){
@@ -194,6 +198,11 @@ void *updateData1(void *vargp)
     }   
 }
 
+/*
+name: update data 2
+description: asks the server to update the GUI with the data given
+about the score and player lives
+*/
 void *updateData2(void *vargp)
 {
     while (TRUE)
@@ -211,6 +220,10 @@ void *updateData2(void *vargp)
     }   
 }
 
+/*
+name: exit button clicked
+description: click event function of the exit button
+*/
 static void exitButtonClicked(GtkWidget *widget, gpointer data)
 {
     gtk_window_close(GTK_WINDOW(window));
@@ -240,7 +253,6 @@ int gameWindow(int option)
     gtk_window_set_resizable(GTK_WINDOW(window), FALSE);
     gtk_widget_add_events(window, GDK_KEY_PRESS_MASK);
     
-    //g_signal_connect(window, "delete-event", G_CALLBACK(gtk_main_quit), NULL);
 
     // Add the respective kay pressed event only if the user is a player
     if (option == 1)
@@ -363,7 +375,6 @@ int gameWindow(int option)
     gtk_widget_hide(croc5);
     gtk_widget_hide(croc6);
 
-    
 
     // Create the respective message request thread depending on the game
     // the user wnats to see
@@ -390,7 +401,6 @@ int gameWindow(int option)
     }
     
     gtk_main();
-
 
     return 0;
 }
